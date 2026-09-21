@@ -24,65 +24,44 @@ export class InputManager {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
 
     this.touchStartX = 0;
     this.touchStartY = 0;
 
     this.bindEvents();
-    this.setupDPad();
   }
 
   bindEvents() {
     if (typeof window !== 'undefined') {
       window.addEventListener('keydown', this.handleKeyDown);
-
-      const canvas = document.getElementById('game-canvas');
-      if (canvas) {
-        canvas.addEventListener('touchstart', this.handleTouchStart, { passive: false });
-        canvas.addEventListener('touchend', this.handleTouchEnd, { passive: false });
-      }
+      window.addEventListener('touchstart', this.handleTouchStart, { passive: false });
+      window.addEventListener('touchmove', this.handleTouchMove, { passive: false });
+      window.addEventListener('touchend', this.handleTouchEnd, { passive: false });
     }
   }
 
   unbindEvents() {
     if (typeof window !== 'undefined') {
       window.removeEventListener('keydown', this.handleKeyDown);
-      const canvas = document.getElementById('game-canvas');
-      if (canvas) {
-        canvas.removeEventListener('touchstart', this.handleTouchStart);
-        canvas.removeEventListener('touchend', this.handleTouchEnd);
-      }
+      window.removeEventListener('touchstart', this.handleTouchStart);
+      window.removeEventListener('touchmove', this.handleTouchMove);
+      window.removeEventListener('touchend', this.handleTouchEnd);
     }
-  }
-
-  setupDPad() {
-    if (typeof document === 'undefined') return;
-
-    const dpadButtons = document.querySelectorAll('[data-dir]');
-    const dirMap = {
-      up: DIR.UP,
-      down: DIR.DOWN,
-      left: DIR.LEFT,
-      right: DIR.RIGHT
-    };
-
-    dpadButtons.forEach(btn => {
-      const trigger = (e) => {
-        e.preventDefault();
-        const dir = dirMap[btn.dataset.dir];
-        if (dir) this.queueDirection(dir);
-      };
-
-      btn.addEventListener('touchstart', trigger, { passive: false });
-      btn.addEventListener('click', trigger);
-    });
   }
 
   handleTouchStart(e) {
     if (e.touches.length > 0) {
       this.touchStartX = e.touches[0].clientX;
       this.touchStartY = e.touches[0].clientY;
+    }
+  }
+
+  handleTouchMove(e) {
+    // Prevent mobile pull-to-refresh and bouncing while playing
+    if (e.cancelable) {
+      e.preventDefault();
     }
   }
 

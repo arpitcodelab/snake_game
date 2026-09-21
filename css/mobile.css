@@ -1,60 +1,103 @@
-/* Mobile Touch Controls & D-Pad */
-#mobile-controls {
-  display: none;
+/* Mobile Responsiveness & Touch Optimization */
+
+/* Prevent mobile elastic bouncing / pull-to-refresh */
+html, body {
+  overflow: hidden;
+  height: 100%;
   width: 100%;
-  max-width: 280px;
-  margin-top: 10px;
+  position: fixed;
   touch-action: none;
-  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
-.dpad {
+#app {
+  height: 100dvh;
+  min-height: 100dvh;
+  width: 100vw;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  width: 100%;
+  justify-content: center;
+  padding: clamp(6px, 1.5vh, 16px);
+  box-sizing: border-box;
 }
 
-.dpad-row {
+.game-card {
+  width: 100%;
+  max-width: min(96vw, 680px);
+  max-height: calc(100dvh - clamp(20px, 4vh, 40px));
+  display: flex;
+  flex-direction: column;
+  border-radius: clamp(8px, 2vw, 14px);
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.game-header {
+  flex-shrink: 0;
+  height: clamp(48px, 7.5vh, 58px);
+  padding: 0 clamp(12px, 3vw, 20px);
+}
+
+.canvas-wrapper {
+  flex: 1;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
-  width: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
-.dpad-btn {
-  width: 56px;
-  height: 56px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff;
-  font-size: 1.4rem;
-  border-radius: 16px;
+#canvas-container {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  aspect-ratio: 660 / 592;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  outline: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  transition: all 0.1s ease;
-  touch-action: manipulation;
 }
 
-.dpad-btn:active {
-  background: rgba(78, 204, 163, 0.3);
-  border-color: #4ecca3;
-  transform: scale(0.92);
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
-/* Show D-Pad on smaller screens or touch devices */
-@media (max-width: 768px), (pointer: coarse) {
-  #mobile-controls {
-    display: block;
-  }
-  .controls-hint {
+/* Hide desktop keyboard hints on mobile touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .game-footer {
     display: none;
   }
 }
 
+/* Compact screens for landscape mobile or short viewports */
+@media (max-height: 560px) {
+  #app {
+    padding: 2px;
+  }
+  .game-header {
+    height: 40px;
+    padding: 0 10px;
+  }
+  .header-score {
+    font-size: 1.2rem;
+  }
+  .apple-icon {
+    width: 24px;
+    height: 24px;
+    background-size: 336px 24px;
+  }
+  .sound-icon-img {
+    width: 22px;
+    height: 22px;
+  }
+  .game-footer {
+    display: none;
+  }
+}
