@@ -1,0 +1,10 @@
+{
+  "project_name": "Snake Game",
+  "granularity": "standard",
+  "phase_id_convention": "sequential",
+  "workflow": {
+    "research": true,
+    "plan_check": true,
+    "code_review": true
+  }
+}
