@@ -1,0 +1,13 @@
+# Ignore git metadata
+.git/
+.gitignore
+
+# Ignore github pages docs
+docs/
+
+# Ignore scratch and test files
+scratch/
+test_*.js
+
+# Ignore markdown docs
+*.md
