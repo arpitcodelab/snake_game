@@ -59,3 +59,11 @@
   transform: scale(0.95);
 }
 
+.hud-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+

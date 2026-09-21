@@ -84,3 +84,4 @@ export class LeaderboardSystem {
     return this.scores[mode] || [];
   }
 }
+
