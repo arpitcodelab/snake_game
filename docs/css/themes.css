@@ -1,0 +1,109 @@
+/* Board & UI Themes (CSS Variables) matching Google Snake & snake-game.io */
+
+/* 1. AMOLED Dark (Default 2099 Cyberpunk) */
+:root, [data-theme="dark"] {
+  --bg-color: #06070b;
+  --header-bg: #0a0d17;
+  --border-bg: #090c14;
+  --board-bg-1: #121826;
+  --board-bg-2: #0c101b;
+  --grid-line: rgba(0, 242, 254, 0.05);
+  --snake-head: #00f2fe;
+  --snake-body: #00c6ff;
+  --snake-eye: #ffffff;
+  --accent-color: #00f2fe;
+  --text-primary: #ffffff;
+  --text-secondary: #7e8b9b;
+  --card-bg: #090c14;
+  --card-border: rgba(255, 255, 255, 0.08);
+}
+
+/* 2. Desert Gold (Google Snake) */
+[data-theme="desert"] {
+  --bg-color: #161616;
+  --header-bg: #0a0d17;
+  --border-bg: #090c14;
+  --board-bg-1: #fed049;
+  --board-bg-2: #f5c338;
+  --grid-line: transparent;
+  --snake-head: #3b82f6;
+  --snake-body: #3b82f6;
+  --snake-eye: #172554;
+  --accent-color: #e94560;
+  --text-primary: #ffffff;
+  --text-secondary: #dcdcdc;
+  --card-bg: rgba(22, 22, 22, 0.92);
+  --card-border: rgba(255, 255, 255, 0.12);
+}
+
+/* 3. Classic Green (Google Snake) */
+[data-theme="classic"] {
+  --bg-color: #161616;
+  --header-bg: #0a0d17;
+  --border-bg: #090c14;
+  --board-bg-1: #aad751;
+  --board-bg-2: #a2d149;
+  --grid-line: transparent;
+  --snake-head: #4683f2;
+  --snake-body: #4683f2;
+  --snake-eye: #172554;
+  --accent-color: #e94560;
+  --text-primary: #ffffff;
+  --text-secondary: #dcdcdc;
+  --card-bg: rgba(22, 22, 22, 0.92);
+  --card-border: rgba(255, 255, 255, 0.12);
+}
+
+/* 4. Forest Jungle */
+[data-theme="forest"] {
+  --bg-color: #0c140e;
+  --header-bg: #152618;
+  --border-bg: #1f3d23;
+  --board-bg-1: #244a29;
+  --board-bg-2: #1a361e;
+  --grid-line: rgba(100, 220, 100, 0.04);
+  --snake-head: #7bc67e;
+  --snake-body: #5ca160;
+  --snake-eye: #0d1a10;
+  --accent-color: #ff9f43;
+  --text-primary: #e8f5e9;
+  --text-secondary: #81c784;
+  --card-bg: rgba(21, 38, 24, 0.92);
+  --card-border: rgba(123, 198, 126, 0.15);
+}
+
+/* 5. Cosmic Space */
+[data-theme="space"] {
+  --bg-color: #0a0817;
+  --header-bg: #101026;
+  --border-bg: #1b1b42;
+  --board-bg-1: #212154;
+  --board-bg-2: #17173b;
+  --grid-line: rgba(160, 140, 255, 0.05);
+  --snake-head: #a29bfe;
+  --snake-body: #6c5ce7;
+  --snake-eye: #060612;
+  --accent-color: #fd79a8;
+  --text-primary: #f1f2f6;
+  --text-secondary: #a4b0be;
+  --card-bg: rgba(16, 16, 38, 0.92);
+  --card-border: rgba(162, 155, 254, 0.2);
+}
+
+/* 6. Deep Ocean */
+[data-theme="ocean"] {
+  --bg-color: #04101e;
+  --header-bg: #0a2238;
+  --border-bg: #103557;
+  --board-bg-1: #124673;
+  --board-bg-2: #0d3457;
+  --grid-line: rgba(0, 210, 211, 0.04);
+  --snake-head: #00d2d3;
+  --snake-body: #01a3a4;
+  --snake-eye: #051424;
+  --accent-color: #ff6b6b;
+  --text-primary: #e0f7fa;
+  --text-secondary: #80deea;
+  --card-bg: rgba(10, 34, 56, 0.92);
+  --card-border: rgba(0, 210, 211, 0.15);
+}
