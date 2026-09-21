@@ -22,14 +22,28 @@ export class SnakeRenderer {
    * @param {Snake} snake
    * @param {number} cellWidth
    * @param {number} cellHeight
+   * @param {GameMode} [mode]
    */
-  draw(ctx, snake, cellWidth, cellHeight) {
+  draw(ctx, snake, cellWidth, cellHeight, mode = null) {
     if (!snake || snake.body.length === 0) return;
 
     const radius = Math.min(cellWidth, cellHeight) * 0.4;
+    const hasSecondHead = mode && typeof mode.hasSecondaryHead === 'function' && mode.hasSecondaryHead();
 
     // Draw body segments (from tail to segment 1)
     for (let i = snake.body.length - 1; i >= 1; i--) {
+      // Check Broken Snake mode gap
+      if (mode && typeof mode.shouldRenderSegment === 'function') {
+        if (!mode.shouldRenderSegment(i, snake.body.length)) {
+          continue;
+        }
+      }
+
+      // If this is the tail and mode is Two-Headed, render it as a secondary head
+      if (i === snake.body.length - 1 && hasSecondHead) {
+        continue; // Will draw as secondary head below
+      }
+
       const seg = snake.body[i];
       const px = seg.x * cellWidth;
       const py = seg.y * cellHeight;
@@ -38,16 +52,33 @@ export class SnakeRenderer {
       this.drawRoundedSegment(ctx, px, py, cellWidth, cellHeight, radius);
     }
 
-    // Draw head (segment 0)
+    // Draw primary head (segment 0)
     const head = snake.head;
     const hx = head.x * cellWidth;
     const hy = head.y * cellHeight;
 
     ctx.fillStyle = snake.isDead ? this.colors.deadHead : this.colors.head;
     this.drawRoundedSegment(ctx, hx, hy, cellWidth, cellHeight, radius);
-
-    // Draw expressive eyes on head
     this.drawEyes(ctx, hx, hy, cellWidth, cellHeight, snake.direction, snake.isDead);
+
+    // Draw secondary head if Two-Headed mode
+    if (hasSecondHead && snake.body.length > 1) {
+      const tail = snake.body[snake.body.length - 1];
+      const tx = tail.x * cellWidth;
+      const ty = tail.y * cellHeight;
+
+      // Determine reverse direction for secondary head
+      const prev = snake.body[snake.body.length - 2];
+      const secondDir = {
+        x: tail.x - prev.x,
+        y: tail.y - prev.y,
+        name: (tail.x > prev.x ? 'RIGHT' : tail.x < prev.x ? 'LEFT' : tail.y > prev.y ? 'DOWN' : 'UP')
+      };
+
+      ctx.fillStyle = snake.isDead ? this.colors.deadHead : this.colors.head;
+      this.drawRoundedSegment(ctx, tx, ty, cellWidth, cellHeight, radius);
+      this.drawEyes(ctx, tx, ty, cellWidth, cellHeight, secondDir, snake.isDead);
+    }
   }
 
   /**

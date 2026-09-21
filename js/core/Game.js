@@ -5,6 +5,7 @@ import { Food } from '../entities/Food.js';
 import { CollisionSystem } from '../systems/CollisionSystem.js';
 import { ScoreSystem } from '../systems/ScoreSystem.js';
 import { Renderer } from '../renderer/Renderer.js';
+import { modeManager } from '../modes/ModeManager.js';
 import { bus } from './EventBus.js';
 import { GRID, SPEED, GAME_STATE, DIR } from '../utils/Constants.js';
 
@@ -17,6 +18,9 @@ export class Game {
     this.state = GAME_STATE.START;
     this.grid = { ...GRID.MEDIUM }; // 30x30 default
     this.speed = SPEED.BASE_MS;
+
+    // Active mode
+    this.mode = modeManager.get('classic');
 
     // Systems
     this.renderer = new Renderer(canvas);
@@ -49,6 +53,18 @@ export class Game {
     bus.on('game:over', () => this.handleGameOver());
   }
 
+  /**
+   * Set active game mode by ID
+   * @param {string} modeId
+   */
+  setMode(modeId) {
+    this.mode = modeManager.get(modeId);
+    console.log('🎮 Mode changed to:', this.mode.name);
+    if (this.state === GAME_STATE.PLAYING) {
+      this.restart();
+    }
+  }
+
   start() {
     this.state = GAME_STATE.PLAYING;
     this.snake.reset(
@@ -58,9 +74,11 @@ export class Game {
     );
     this.food.reset(this.snake.body, this.grid);
     this.inputManager.reset(DIR.RIGHT);
-    this.loop.setSpeed(this.speed);
+
+    const baseSpeed = Math.round(SPEED.BASE_MS / this.mode.getSpeedModifier());
+    this.loop.setSpeed(baseSpeed);
     this.loop.start();
-    console.log('🐍 Game started! Grid:', this.grid.cols, 'x', this.grid.rows);
+    console.log('🐍 Game started! Mode:', this.mode.name, 'Grid:', this.grid.cols, 'x', this.grid.rows);
   }
 
   restart() {
@@ -99,39 +117,46 @@ export class Game {
   update(tickDelta) {
     if (this.state !== GAME_STATE.PLAYING) return;
 
-    // 1. Update food timers (e.g. golden fruit)
+    // 1. Mode-specific update hook (e.g. moving targets)
+    this.mode.onUpdate(tickDelta, this.snake, this.food, this.grid);
+
+    // 2. Update food timers (e.g. golden fruit)
     this.food.update(tickDelta, this.snake.body, this.grid);
 
-    // 2. Poll buffered input direction
+    // 3. Poll buffered input direction
     const nextDir = this.inputManager.pollDirection(this.snake.direction);
     if (nextDir) {
       this.snake.setDirection(nextDir);
     }
 
-    // 3. Move snake
+    // 4. Move snake
     this.snake.move();
 
-    // 4. Check wall and self collisions
-    const collision = this.collisionSystem.check(this.snake, this.grid);
+    // 5. Check wall and self collisions (delegating to active mode)
+    const collision = this.collisionSystem.check(this.snake, this.grid, this.mode);
     if (collision.collided) {
       bus.emit('game:over', { score: this.scoreSystem.score, cause: collision.type });
       return;
     }
 
-    // 5. Check food collision
+    // 6. Check food collision
     const eatenFood = this.collisionSystem.checkFood(this.snake.head, this.food.items);
     if (eatenFood) {
       this.snake.grow(1);
-      this.scoreSystem.add(eatenFood.points);
+
+      const points = eatenFood.points * this.mode.getScoreMultiplier();
+      this.scoreSystem.add(points);
+      this.mode.onFoodEaten(eatenFood, this.scoreSystem, this.snake);
       this.food.consume(eatenFood, this.snake.body, this.grid);
 
       // Accelerate speed dynamically as more fruits are consumed
-      const newSpeed = this.scoreSystem.getSpeedMs(SPEED.BASE_MS, SPEED.MIN_MS, SPEED.STEP_DOWN);
+      const rawSpeed = this.scoreSystem.getSpeedMs(SPEED.BASE_MS, SPEED.MIN_MS, SPEED.STEP_DOWN);
+      const newSpeed = Math.round(rawSpeed / this.mode.getSpeedModifier());
       this.loop.setSpeed(newSpeed);
 
       bus.emit('food:eaten', {
         food: eatenFood,
-        points: eatenFood.points,
+        points,
         score: this.scoreSystem.score
       });
 
@@ -143,7 +168,7 @@ export class Game {
    * Render frame (60fps)
    */
   render(interpolation) {
-    this.renderer.draw(this.snake, this.food, this.grid);
+    this.renderer.draw(this.snake, this.food, this.grid, this.mode);
   }
 }
 

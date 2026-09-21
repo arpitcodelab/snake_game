@@ -49,16 +49,33 @@ export class CollisionSystem {
    * Full collision check for current snake position
    * @param {Snake} snake
    * @param {object} grid
+   * @param {GameMode} [mode]
    * @returns {{ collided: boolean, type: 'WALL'|'SELF'|null }}
    */
-  check(snake, grid) {
+  check(snake, grid, mode = null) {
     const head = snake.head;
 
-    if (this.checkWall(head, grid)) {
+    // 1. Wall check (with mode override)
+    if (mode && typeof mode.onWallCollision === 'function') {
+      const wallResult = mode.onWallCollision(head, grid, snake);
+      if (wallResult.handled) {
+        if (wallResult.collided) return { collided: true, type: 'WALL' };
+      } else if (this.checkWall(head, grid)) {
+        return { collided: true, type: 'WALL' };
+      }
+    } else if (this.checkWall(head, grid)) {
       return { collided: true, type: 'WALL' };
     }
 
-    if (this.checkSelf(head, snake.body)) {
+    // 2. Self check (with mode override)
+    if (mode && typeof mode.onSelfCollision === 'function') {
+      const selfResult = mode.onSelfCollision(head, snake.body, snake);
+      if (selfResult.handled) {
+        if (selfResult.collided) return { collided: true, type: 'SELF' };
+      } else if (this.checkSelf(head, snake.body)) {
+        return { collided: true, type: 'SELF' };
+      }
+    } else if (this.checkSelf(head, snake.body)) {
       return { collided: true, type: 'SELF' };
     }
 

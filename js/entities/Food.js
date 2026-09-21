@@ -212,3 +212,4 @@ export class Food {
     this.ensurePopulation(snakeBody, grid);
   }
 }
+

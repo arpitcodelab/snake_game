@@ -40,8 +40,9 @@ export class Renderer {
    * @param {Snake} snake
    * @param {Food} food
    * @param {object} grid - { cols, rows }
+   * @param {GameMode} [mode]
    */
-  draw(snake, food, grid) {
+  draw(snake, food, grid, mode = null) {
     const width = this.logicalSize;
     const height = this.logicalSize;
     const cellWidth = width / grid.cols;
@@ -57,7 +58,7 @@ export class Renderer {
 
     // 3. Draw snake
     if (snake) {
-      this.snakeRenderer.draw(this.ctx, snake, cellWidth, cellHeight);
+      this.snakeRenderer.draw(this.ctx, snake, cellWidth, cellHeight, mode);
     }
   }
 }
