@@ -96,3 +96,4 @@
   4. Floating "+1", "+3", or "+10" score text rises and fades out when food is eaten.
   5. Audio works reliably across browsers, gracefully falling back to procedural Web Audio synthesis if audio files are unavailable.
 **Plans**: TBD
+

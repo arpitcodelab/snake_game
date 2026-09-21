@@ -27,3 +27,4 @@ A high-quality, modern, browser-based Snake game built with Vanilla JavaScript a
 - **No Heavy Frameworks**: No React, Vue, or Webpack/Vite build steps needed. Pure web standards.
 - **No Backend**: All state, unlocks, and leaderboard data are local to the client browser.
 - **No Monetization / Accounts**: Zero ads, paywalls, or third-party logins.
+

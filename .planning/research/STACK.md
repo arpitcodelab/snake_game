@@ -22,3 +22,4 @@
   - `die.png`, `eat.png`, `effect.png`, `blink.png`, `tongue.png`: Visual effect sprites and animations.
   - UI icons: `volume_up_white_24dp.png`, `refresh_white_24dp.png`, `shuffle_white_24dp.png`, `keys.svg`.
 - The game will copy and organize these into standard `assets/images/` and slice the spritesheets cleanly using Canvas `drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)`.
+

@@ -29,3 +29,4 @@ The project has comprehensive requirements documented in `PRD.md` and a clean mo
 6. **Phase 6: Audio, Particles & Visual Polish**
    - `AudioManager` with Web Audio API / Howler integration and procedural synthesis fallback.
    - Particle bursts on fruit eat, death animation, screen shake, and floating score popups.
+

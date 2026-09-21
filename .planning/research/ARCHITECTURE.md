@@ -38,3 +38,4 @@ main.js (Entry point)
   - `bus.emit('score:updated', { score, highScore })`
   - `bus.emit('theme:changed', { theme })`
 - Systems listen and react independently without circular dependencies.
+

@@ -26,3 +26,4 @@
 - **Snake Skins**: Default Green, Neon, Galaxy, Fire, Ice, Gold. Unlocked via total fruit or score thresholds.
 - **Board Themes**: Classic Dark (#1a1a2e), Pure Dark (#0d0d0d), Forest (#1a2f1a), Space (#050510), Retro CRT, Ocean.
 - **Local Leaderboard**: Top 10 scores per mode, arcade 3-letter initials, date.
+

@@ -19,3 +19,4 @@
 ## 5. Spritesheet Alignment & Slicing
 - **Problem**: Google Snake's `apple_types.png` contains multiple icons packed together. Slicing with hardcoded inaccurate offsets causes pixel clipping or misalignment.
 - **Mitigation**: Inspect and verify exact sprite dimensions and padding in `apple_types.png` and `trophy_types.png` to map indices accurately.
+
