@@ -17,6 +17,18 @@ export class SnakeRenderer {
   }
 
   /**
+   * Set colors based on active skin
+   * @param {object} skin
+   */
+  setSkin(skin) {
+    if (!skin) return;
+    if (skin.head) this.colors.head = skin.head;
+    if (skin.body) this.colors.body = skin.body;
+    if (skin.eye) this.colors.eye = skin.eye;
+    if (skin.eyeWhite) this.colors.eyePupil = skin.eyeWhite;
+  }
+
+  /**
    * Draw the snake on canvas
    * @param {CanvasRenderingContext2D} ctx
    * @param {Snake} snake

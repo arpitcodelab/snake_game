@@ -6,6 +6,7 @@
   <title>🐍 Modern Snake Game</title>
   
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/screens.css">
   <link rel="stylesheet" href="css/hud.css">
   <link rel="stylesheet" href="css/settings.css">
@@ -63,6 +64,7 @@
           </div>
           <div class="start-actions">
             <button id="btn-play" class="btn-primary">PLAY NOW</button>
+            <button id="btn-leaderboard-start" class="btn-secondary">🏆 LEADERBOARD</button>
             <button id="btn-settings-start" class="btn-secondary">⚙️ SETTINGS</button>
           </div>
         </div>
@@ -80,10 +82,31 @@
               <span id="go-best" class="value">0</span>
             </div>
             <span id="go-new-high-badge" class="badge-new-high" style="display: none;">NEW HIGH SCORE! 🎉</span>
+
+            <div id="go-initials-container" class="initials-container" style="display: none;">
+              <span class="initials-label">ENTER INITIALS</span>
+              <div class="initials-input-row">
+                <input type="text" id="go-input-initials" class="input-initials" maxlength="3" placeholder="AAA" />
+                <button id="btn-save-initials" class="btn-save-initials">SAVE</button>
+              </div>
+            </div>
           </div>
           <div class="start-actions">
             <button id="btn-replay" class="btn-primary">PLAY AGAIN</button>
+            <button id="btn-go-leaderboard" class="btn-secondary">🏆 LEADERBOARD</button>
             <button id="btn-menu" class="btn-secondary">MAIN MENU</button>
+          </div>
+        </div>
+
+        <!-- Screen: Leaderboard -->
+        <div id="screen-leaderboard" class="screen hidden">
+          <h2 class="leaderboard-heading">🏆 HIGH SCORES</h2>
+          <select id="leaderboard-mode-select" class="leaderboard-mode-select"></select>
+          <div class="leaderboard-container">
+            <ul id="leaderboard-list" class="leaderboard-list"></ul>
+          </div>
+          <div class="start-actions">
+            <button id="btn-leaderboard-back" class="btn-secondary">BACK TO MENU</button>
           </div>
         </div>
 
@@ -105,6 +128,14 @@
             <div class="setting-group">
               <label for="setting-fruits-count" class="setting-label">FRUITS ON SCREEN</label>
               <select id="setting-fruits-count" class="setting-select"></select>
+            </div>
+            <div class="setting-group">
+              <label for="setting-theme" class="setting-label">BOARD THEME</label>
+              <select id="setting-theme" class="setting-select"></select>
+            </div>
+            <div class="setting-group">
+              <label for="setting-skin" class="setting-label">SNAKE SKIN</label>
+              <select id="setting-skin" class="setting-select"></select>
             </div>
           </div>
         </div>

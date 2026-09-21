@@ -10,10 +10,17 @@ export class StartScreen {
 
     this.btnPlay = document.getElementById('btn-play');
     this.btnSettings = document.getElementById('btn-settings-start');
+    this.btnLeaderboard = document.getElementById('btn-leaderboard-start');
     this.highScoreDisplay = document.getElementById('start-highscore');
 
     this.bindEvents();
     this.update();
+
+    bus.on('screen:change', ({ screen }) => {
+      if (screen === 'start') {
+        this.update();
+      }
+    });
   }
 
   bindEvents() {
@@ -29,6 +36,12 @@ export class StartScreen {
         this.screenManager.openPanel('settings');
       });
     }
+
+    if (this.btnLeaderboard) {
+      this.btnLeaderboard.addEventListener('click', () => {
+        bus.emit('leaderboard:open', { mode: this.game.mode.id });
+      });
+    }
   }
 
   update() {
@@ -40,3 +53,4 @@ export class StartScreen {
     }
   }
 }
+

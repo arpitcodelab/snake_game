@@ -177,3 +177,174 @@
   border-radius: 20px;
   margin-top: 4px;
 }
+
+/* Leaderboard Screen */
+#screen-leaderboard {
+  background: radial-gradient(circle at center, rgba(26, 27, 45, 0.95) 0%, rgba(18, 19, 26, 0.98) 100%);
+  border-radius: 20px;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.leaderboard-heading {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #ffd700 0%, #ff9f43 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.leaderboard-mode-select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+.leaderboard-container {
+  width: 100%;
+  max-height: 260px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 8px 12px;
+}
+
+.leaderboard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.leaderboard-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 700;
+}
+
+.leaderboard-row:nth-child(1) {
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+}
+
+.leaderboard-row:nth-child(2) {
+  background: rgba(192, 192, 192, 0.1);
+  border: 1px solid rgba(192, 192, 192, 0.2);
+}
+
+.leaderboard-row:nth-child(3) {
+  background: rgba(205, 127, 50, 0.1);
+  border: 1px solid rgba(205, 127, 50, 0.2);
+}
+
+.rank-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rank-badge {
+  font-size: 1.1rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.initials {
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+
+.score-col {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.score-val {
+  font-size: 1.1rem;
+  color: #4ecca3;
+  font-weight: 900;
+}
+
+.date-val {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.leaderboard-empty {
+  padding: 20px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Initials Input on Game Over */
+.initials-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.initials-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffd700;
+}
+
+.initials-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.input-initials {
+  width: 90px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  color: #fff;
+  padding: 6px;
+  outline: none;
+}
+
+.btn-save-initials {
+  background: #ffd700;
+  color: #000;
+  border: none;
+  font-weight: 900;
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.btn-save-initials:hover {
+  transform: scale(1.05);
+}
+

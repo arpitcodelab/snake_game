@@ -8,7 +8,8 @@ export class ScreenManager {
     this.screens = {
       start: document.getElementById('screen-start'),
       game: document.getElementById('screen-game'),
-      gameover: document.getElementById('screen-gameover')
+      gameover: document.getElementById('screen-gameover'),
+      leaderboard: document.getElementById('screen-leaderboard')
     };
     this.panels = {
       settings: document.getElementById('panel-settings')
