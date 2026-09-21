@@ -1,0 +1,334 @@
+ body {
+            margin: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #161616;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 500;
+        }
+
+        body>div {
+            height: 100%
+        }
+
+        html {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            height: 100%
+        }
+
+        trivia-game {
+            display: block;
+            height: 100%
+        }
+
+        .fp-f {
+            bottom: 0;
+            height: auto;
+            left: 0;
+            position: fixed !important;
+            right: 0;
+            top: 0;
+            width: auto;
+            z-index: 127
+        }
+
+        .fp-h:not(.fp-nh):not(.goog-modalpopup-bg):not(.goog-modalpopup) {
+            display: none !important
+        }
+
+        .fp-zh.fp-h:not(.fp-nh):not(.goog-modalpopup-bg):not(.goog-modalpopup) {
+            display: block !important;
+            height: 0;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0)
+        }
+
+        .fp-i .fp-c {
+            display: block;
+            min-height: 100vh
+        }
+
+        li.fp-c {
+            list-style: none
+        }
+
+        .fp-w {
+            box-sizing: border-box;
+            left: 0;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1217px;
+            right: 0
+        }
+
+        #menu1 li a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+.EjCLSb {
+                max-width: 800px;
+                height: 600px;
+				width: 100%;
+            }
+
+            #Q3CKle {
+                position: relative;
+                width: 100%;
+                height: 70px;
+                background-color: #644d1f;
+                user-select: none;
+                border-radius: 10px 10px 0 0 !important;
+            }
+
+            .wSwbef {
+                overflow: hidden
+            }
+
+            .TO4uAe {
+                position: relative;
+                top: 16px;
+                height: 38px;
+                width: 38px;
+                display: inline-block
+            }
+
+            .UJhXPd {
+                height: 60px;
+                width: 60px;
+                margin-bottom: 3px
+            }
+
+            .XUtzXd {
+                height: 100%;
+                position: relative;
+                top: 0;
+                left: 0;
+                user-drag: none;
+                user-select: none
+            }
+
+            .MR2r3b {
+                position: absolute;
+                top: 21px;
+                visibility: hidden
+            }
+
+            .ZEpI5d {
+                position: absolute;
+                top: 20px
+            }
+
+            .mL9Mvb {
+                position: absolute;
+                top: 23px
+            }
+
+            .jNB0Ic {
+                width: 100%;
+                height: calc(100% - 70px)
+            }
+
+            .cer0Bd {
+                width: 100%;
+                height: 100%;
+                border-radius: 0 0 10px 10px !important;
+            }
+
+            .dyP0v {
+                font-family: 'Nunito', sans-serif;
+                color: white;
+                font-size: 20px;
+                width: 60px;
+                height: 35px;
+                position: relative;
+                padding-left: 5px;
+                top: 8px;
+                display: inline-block
+            }
+
+            #EfeGfb {
+                position: absolute;
+                left: 20px;
+                height: 70px
+            }
+
+            #RprIte {
+                position: absolute;
+                right: 20px;
+                height: 70px
+            }
+
+            #TqOHCc {
+                width: 28px;
+                right: 80px;
+                z-index: 1000;
+                cursor: pointer
+            }
+
+            #yhjoFc {
+                width: 30px;
+                right: 40px;
+                z-index: 1001;
+                cursor: pointer
+            }
+
+            #Xc2gWd {
+                width: 25px;
+                right: 8px;
+                z-index: 1002;
+                cursor: pointer
+            }
+
+            .yZz3de #yhjoFc {
+                right: 8px
+            }
+
+            .yZz3de #TqOHCc {
+                right: 46px
+            }
+
+            #fj6BWc {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #578a34;
+                z-index: 1003
+            }
+
+            #Z3vFrd {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgb(0, 0, 0);
+                background-color: rgba(0, 0, 0, 0.7);
+                transition: opacity 0.3s
+            }
+
+            #wkV5ib {
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%)
+            }
+
+            .T7SB3d {
+                position: relative;
+                background: #644d1f;
+                width: 300px;
+                height: 300px;
+                margin: auto;
+                border-radius: 8px;
+                text-align: center;
+                background-size: contain;
+                user-select: none
+            }
+
+            .jfYnYe {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 8px
+            }
+
+            .bF4Gmf {
+                display: inline-block;
+                margin: 32px;
+                text-align: center
+            }
+
+            .dxb8tb {
+                font: 400 28px Nunito, sans-serif;;
+                color: white
+            }
+
+            .wUt0xf {
+                width: 300px;
+                margin: auto;
+                display: flex
+            }
+
+            .FL0z2d {
+                background: #56AD1E;
+                height: 64px;
+                border-radius: 10px;
+                border: none;
+                color: #fff;
+                font-size: 20px;
+                text-align: center;
+                user-select: none;
+                cursor: pointer;
+                display: inline-block
+            }
+
+            .Uxkl7b {
+                margin: 12px 6px 0 0;
+                flex-grow: 1
+            }
+
+            .Uxkl7b img {
+                vertical-align: middle;
+                margin: 0 6px 2px -5px;
+                width: 30px;
+                height: 30px
+            }
+
+            .Uxkl7b h2 {
+                font: 400 20px Nunito, sans-serif;;
+                color: white;
+                padding: 0;
+                margin: 0;
+                margin-top: 20px;
+                display: inline-block
+            }
+
+            .SesFYc {
+                width: 64px;
+                margin: 12px 6px 0 0
+            }
+
+            .SesFYc img {
+                vertical-align: middle;
+                margin: 15px auto;
+                width: 35px;
+                height: 35px
+            }
+
+            #pPeeKb {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                transition: opacity 200ms
+            }
+
+            #mbPNob {
+                width: 120px;
+                height: 120px;
+                background-image: url(./images/keys.svg);
+                background-size: 100px auto;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-color: rgb(0, 0, 0);
+                background-color: rgba(0, 0, 0, 0.6);
+                border-radius: 16px;
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+                display: block;
+                margin: auto;
+                user-select: none
+            }
+			 html:not(.zAoYTe) .hide-focus-ring {
+                outline: 0
+            }

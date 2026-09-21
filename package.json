@@ -1,0 +1,11 @@
+{
+  "name": "snake-game",
+  "version": "1.0.0",
+  "description": "Modern high-quality browser Snake game",
+  "type": "module",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["snake", "game", "canvas", "html5"],
+  "license": "MIT"
+}

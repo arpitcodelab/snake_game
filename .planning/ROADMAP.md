@@ -1,7 +1,7 @@
 # Snake Game — Project Roadmap
 
 ## Summary Checklist
-- [ ] **Phase 1: Project Foundation & Core Canvas Loop**
+- [x] **Phase 1: Project Foundation & Core Canvas Loop**
 - [ ] **Phase 2: Fruit System & Collision Mechanics**
 - [ ] **Phase 3: Game Modes Engine**
 - [ ] **Phase 4: UI Screens, HUD & Mobile Controls**
@@ -13,7 +13,7 @@
 ## Progress Table
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Foundation & Core Canvas Loop | 0/1 | Not started | - |
+| 1. Project Foundation & Core Canvas Loop | 1/1 | Completed | 2026-09-21 |
 | 2. Fruit System & Collision Mechanics | 0/1 | Not started | - |
 | 3. Game Modes Engine | 0/1 | Not started | - |
 | 4. UI Screens, HUD & Mobile Controls | 0/1 | Not started | - |
@@ -33,7 +33,7 @@
   2. Canvas renders a crisp grid with responsive layout at 60fps.
   3. Player can control snake direction using Arrow keys and WASD without 180-degree self-turn bugs.
   4. Hitting a wall or colliding with the snake's own body ends the run and freezes the loop.
-**Plans**: TBD
+**Plans**: 01-01-PLAN.md (Completed)
 
 ### Phase 2: Fruit System & Collision Mechanics
 **Goal**: Implement fruit spawning, spritesheet slicing from Google Snake assets, collision mechanics, snake growth, and scoring.

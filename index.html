@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="classic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>🐍 Modern Snake Game</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Top Header / HUD Placeholder for Phase 1 -->
+    <header class="game-header">
+      <div class="logo">
+        <span class="snake-emoji">🐍</span>
+        <span class="game-title">SNAKE</span>
+      </div>
+      <div class="quick-stats">
+        <div class="stat-box">
+          <span class="stat-label">SCORE</span>
+          <span id="score-display" class="stat-value">0</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">HIGH</span>
+          <span id="high-score-display" class="stat-value">0</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Canvas Container -->
+    <main class="canvas-wrapper">
+      <div id="canvas-container">
+        <canvas id="game-canvas" width="600" height="600"></canvas>
+      </div>
+    </main>
+
+    <!-- Controls Guide / Mobile Hint -->
+    <footer class="game-footer">
+      <div class="controls-hint">
+        <span>Use <strong>Arrow Keys</strong> or <strong>W A S D</strong> to move</span>
+        <span class="separator">•</span>
+        <span>Press <strong>Space</strong> / <strong>P</strong> to Pause</span>
+        <span class="separator">•</span>
+        <span>Press <strong>R</strong> to Restart</span>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
