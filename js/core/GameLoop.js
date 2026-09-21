@@ -1,3 +1,13 @@
+import { performanceMonitor } from '../systems/PerformanceMonitor.js';
+
+const safeRaf = typeof requestAnimationFrame !== 'undefined'
+  ? requestAnimationFrame
+  : (cb) => setTimeout(() => cb(performance.now()), 16);
+
+const safeCaf = typeof cancelAnimationFrame !== 'undefined'
+  ? cancelAnimationFrame
+  : (id) => clearTimeout(id);
+
 /**
  * GameLoop provides a robust 60fps requestAnimationFrame loop
  * with fixed-step updates for deterministic snake mechanics.
@@ -10,7 +20,7 @@ export class GameLoop {
     this.isPaused = false;
     this.lastTime = 0;
     this.accumulator = 0;
-    this.tickInterval = 150; // ms per game step (dynamic with snake speed)
+    this.tickInterval = 190; // ms per game step (comfortable pace)
     this.rafId = null;
 
     this.loop = this.loop.bind(this);
@@ -25,19 +35,20 @@ export class GameLoop {
   }
 
   start() {
-    if (this.isRunning) return;
     this.isRunning = true;
     this.isPaused = false;
     this.lastTime = performance.now();
     this.accumulator = 0;
-    this.rafId = requestAnimationFrame(this.loop);
+    if (!this.rafId) {
+      this.rafId = safeRaf(this.loop);
+    }
   }
 
   stop() {
     this.isRunning = false;
     this.isPaused = false;
     if (this.rafId) {
-      cancelAnimationFrame(this.rafId);
+      safeCaf(this.rafId);
       this.rafId = null;
     }
   }
@@ -70,6 +81,8 @@ export class GameLoop {
     const deltaTime = Math.min(currentTime - this.lastTime, 250); // Cap frame hitching
     this.lastTime = currentTime;
 
+    performanceMonitor.recordFrame(deltaTime);
+
     if (!this.isPaused) {
       this.accumulator += deltaTime;
       while (this.accumulator >= this.tickInterval) {
@@ -82,7 +95,7 @@ export class GameLoop {
     const interpolation = this.isPaused ? 0 : this.accumulator / this.tickInterval;
     this.render(interpolation);
 
-    this.rafId = requestAnimationFrame(this.loop);
+    this.rafId = safeRaf(this.loop);
   }
 }
 

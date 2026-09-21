@@ -3,13 +3,18 @@ import { ScreenManager } from './ui/ScreenManager.js';
 import { StartScreen } from './ui/StartScreen.js';
 import { GameOverScreen } from './ui/GameOverScreen.js';
 import { SettingsPanel } from './ui/SettingsPanel.js';
-import { LeaderboardScreen } from './ui/LeaderboardScreen.js';
+
 import { ThemeSystem } from './systems/ThemeSystem.js';
 import { SkinSystem } from './systems/SkinSystem.js';
 import { LeaderboardSystem } from './systems/LeaderboardSystem.js';
+import { performanceMonitor } from './systems/PerformanceMonitor.js';
 import { bus } from './core/EventBus.js';
+import { assetLoader } from './utils/AssetLoader.js';
 
 window.addEventListener('DOMContentLoaded', () => {
+  // Preload futuristic graphics assets (boaa.png, planet.png, snqke.png)
+  assetLoader.preloadAll();
+
   const canvas = document.getElementById('game-canvas');
   if (!canvas) {
     console.error('Failed to find #game-canvas element');
@@ -35,7 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const startScreen = new StartScreen(screenManager, game);
   const gameOverScreen = new GameOverScreen(screenManager, game, leaderboardSystem);
   const settingsPanel = new SettingsPanel(screenManager, game, themeSystem, skinSystem);
-  const leaderboardScreen = new LeaderboardScreen(screenManager, leaderboardSystem);
+
 
   // Wire up header sound toggle with authentic icons
   const muteBtn = document.getElementById('btn-mute-hud');
@@ -63,6 +68,15 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Wire up header restart button
+  const btnRestartHud = document.getElementById('btn-restart-hud');
+  if (btnRestartHud) {
+    btnRestartHud.addEventListener('click', () => {
+      screenManager.showScreen('game');
+      game.restart();
+    });
+  }
+
   // Wire up header settings button
   const btnSettingsHeader = document.getElementById('btn-settings-header');
   if (btnSettingsHeader) {
@@ -70,6 +84,7 @@ window.addEventListener('DOMContentLoaded', () => {
       screenManager.openPanel('settings');
     });
   }
+
 
   // Show start screen initially
   screenManager.showScreen('start');
@@ -82,5 +97,6 @@ window.addEventListener('DOMContentLoaded', () => {
   window.__LEADERBOARD_SYSTEM__ = leaderboardSystem;
   window.__AUDIO_MGR__ = game.audioManager;
   window.__PARTICLE_SYS__ = game.particleSystem;
+  window.__PERF_MONITOR__ = performanceMonitor;
 });
 

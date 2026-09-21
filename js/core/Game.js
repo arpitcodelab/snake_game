@@ -49,12 +49,31 @@ export class Game {
     );
     this.loop.setSpeed(this.speed);
 
+    // Initial entities setup
+    this.food.reset(this.snake.body, this.grid);
+
     // Bind event bus listeners
     this.setupEvents();
     this.updateHUD();
+    this.render(0);
+    this.loop.start();
   }
 
   setupEvents() {
+    bus.on('game:start', () => {
+      if (this.state === GAME_STATE.START) {
+        this.start();
+      }
+    });
+
+    bus.on('input:direction', (dir) => {
+      if (this.state === GAME_STATE.START) {
+        bus.emit('screen:change', { screen: 'game' });
+        this.start();
+        this.snake.setDirection(dir);
+      }
+    });
+
     bus.on('input:pause', () => this.togglePause());
     bus.on('input:restart', () => this.restart());
     bus.on('game:over', () => this.handleGameOver());
@@ -115,6 +134,14 @@ export class Game {
     this.grid = { ...gridObj };
     if (this.state === GAME_STATE.PLAYING) {
       this.restart();
+    } else {
+      this.snake.reset(
+        { x: Math.floor(this.grid.cols / 2), y: Math.floor(this.grid.rows / 2) },
+        3,
+        DIR.RIGHT
+      );
+      this.food.reset(this.snake.body, this.grid);
+      this.render(0);
     }
   }
 
@@ -126,6 +153,9 @@ export class Game {
     this.food.setTargetCount(count);
     if (this.state === GAME_STATE.PLAYING) {
       this.food.ensurePopulation(this.snake.body, this.grid);
+    } else {
+      this.food.reset(this.snake.body, this.grid);
+      this.render(0);
     }
   }
 
@@ -157,7 +187,7 @@ export class Game {
   }
 
   togglePause() {
-    if (this.state === GAME_STATE.GAME_OVER) return;
+    if (this.state === GAME_STATE.GAME_OVER || this.state === GAME_STATE.WIN) return;
 
     const isPaused = this.loop.togglePause();
     this.state = isPaused ? GAME_STATE.PAUSED : GAME_STATE.PLAYING;
@@ -166,15 +196,24 @@ export class Game {
   }
 
   handleGameOver() {
+    if (this.state === GAME_STATE.GAME_OVER) return;
     this.state = GAME_STATE.GAME_OVER;
     this.snake.isDead = true;
-    this.loop.stop();
 
     this.audioManager.playDie();
     this.renderer.triggerScreenShake(350, 8);
 
     this.updateHUD();
     console.log('💀 GAME OVER! Score:', this.scoreSystem.score);
+  }
+
+  handleWin() {
+    if (this.state === GAME_STATE.WIN || this.state === GAME_STATE.GAME_OVER) return;
+    this.state = GAME_STATE.WIN;
+    this.audioManager.playHighScore();
+    this.updateHUD();
+    bus.emit('game:win', { score: this.scoreSystem.score });
+    console.log('🏆 VICTORY! Arena cleared! Score:', this.scoreSystem.score);
   }
 
   updateHUD() {
@@ -201,7 +240,10 @@ export class Game {
    * Fixed tick logic update
    */
   update(tickDelta) {
-    if (this.state !== GAME_STATE.PLAYING) return;
+    if (this.state !== GAME_STATE.PLAYING) {
+      this.particleSystem.update(tickDelta / 1000);
+      return;
+    }
 
     // Update particle effects and floating score text
     this.particleSystem.update(tickDelta / 1000);
@@ -250,6 +292,12 @@ export class Game {
       });
 
       this.updateHUD();
+
+      // Check win condition (all cells occupied by snake)
+      if (this.snake.body.length >= this.grid.cols * this.grid.rows) {
+        this.handleWin();
+        return;
+      }
     }
   }
 

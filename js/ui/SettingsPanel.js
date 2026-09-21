@@ -1,6 +1,7 @@
 import { modeManager } from '../modes/ModeManager.js';
 import { GRID } from '../utils/Constants.js';
 import { bus } from '../core/EventBus.js';
+import { performanceMonitor } from '../systems/PerformanceMonitor.js';
 
 /**
  * SettingsPanel handles pre-game and in-game configuration
@@ -19,6 +20,7 @@ export class SettingsPanel {
     this.selectFruits = document.getElementById('setting-fruits-count');
     this.selectTheme = document.getElementById('setting-theme');
     this.selectSkin = document.getElementById('setting-skin');
+    this.selectQuality = document.getElementById('setting-quality');
 
     this.initOptions();
     this.loadSettings();
@@ -43,9 +45,9 @@ export class SettingsPanel {
     // Populate board size dropdown
     if (this.selectBoard) {
       this.selectBoard.innerHTML = `
-        <option value="SMALL">Small (20×20)</option>
-        <option value="MEDIUM" selected>Medium (30×30)</option>
-        <option value="LARGE">Large (40×40)</option>
+        <option value="SMALL">Small (11×9)</option>
+        <option value="MEDIUM" selected>Standard (17×15)</option>
+        <option value="LARGE">Large (23×19)</option>
       `;
     }
 
@@ -111,6 +113,7 @@ export class SettingsPanel {
     if (this.selectFruits) this.selectFruits.value = settings.fruits.toString();
     if (this.selectTheme && settings.theme) this.selectTheme.value = settings.theme;
     if (this.selectSkin && settings.skin) this.selectSkin.value = settings.skin;
+    if (this.selectQuality) this.selectQuality.value = performanceMonitor.userPreference;
 
     this.applySettings(settings);
   }
@@ -123,6 +126,10 @@ export class SettingsPanel {
       theme: this.selectTheme ? this.selectTheme.value : 'classic',
       skin: this.selectSkin ? this.selectSkin.value : 'classic'
     };
+
+    if (this.selectQuality) {
+      performanceMonitor.setPreference(this.selectQuality.value);
+    }
 
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('snake_settings', JSON.stringify(settings));
@@ -172,6 +179,9 @@ export class SettingsPanel {
     }
     if (this.selectSkin) {
       this.selectSkin.addEventListener('change', () => this.saveSettings());
+    }
+    if (this.selectQuality) {
+      this.selectQuality.addEventListener('change', () => this.saveSettings());
     }
   }
 }

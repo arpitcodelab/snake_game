@@ -27,7 +27,11 @@ export class GameOverScreen {
 
   bindEvents() {
     bus.on('game:over', ({ score }) => {
-      this.show(score);
+      this.show(score, false);
+    });
+
+    bus.on('game:win', ({ score }) => {
+      this.show(score, true);
     });
 
     if (this.btnReplay) {
@@ -68,20 +72,34 @@ export class GameOverScreen {
     }
   }
 
-  show(score) {
+  show(score, isWin = false) {
     this.currentScore = score;
     const highScore = this.game.scoreSystem.highScore;
     const isNewHigh = score > 0 && score >= highScore;
+
+    const headingEl = document.querySelector('.gameover-heading');
+    const cardEl = document.querySelector('.gameover-card');
+    if (headingEl) {
+      headingEl.textContent = isWin ? 'VICTORY' : 'SNAKE GAME';
+    }
+    if (cardEl) {
+      if (isWin) {
+        cardEl.classList.add('victory');
+      } else {
+        cardEl.classList.remove('victory');
+      }
+    }
 
     if (this.scoreEl) this.scoreEl.textContent = score.toString();
     if (this.bestEl) this.bestEl.textContent = highScore.toString();
 
     if (this.newHighBadge) {
-      this.newHighBadge.style.display = isNewHigh ? 'inline-block' : 'none';
+      this.newHighBadge.textContent = isWin ? 'ARENA CLEARED! 🏆' : 'NEW HIGH SCORE! 🎉';
+      this.newHighBadge.style.display = (isWin || isNewHigh) ? 'inline-block' : 'none';
     }
 
     if (this.trophyBadge) {
-      if (isNewHigh) {
+      if (isWin || isNewHigh) {
         this.trophyBadge.className = 'trophy-large gold';
         this.trophyBadge.style.display = 'inline-block';
       } else if (score >= highScore * 0.75 && score > 0) {

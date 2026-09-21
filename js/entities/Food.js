@@ -3,11 +3,11 @@
  */
 
 export const FRUIT_TYPES = {
-  APPLE: { id: 'apple', name: 'Apple', points: 1, spriteIndex: 0, weight: 60 },
-  BANANA: { id: 'banana', name: 'Banana', points: 3, spriteIndex: 1, weight: 15 },
-  CHERRY: { id: 'cherry', name: 'Cherry', points: 3, spriteIndex: 6, weight: 15 },
-  STRAWBERRY: { id: 'strawberry', name: 'Strawberry', points: 3, spriteIndex: 7, weight: 10 },
-  GOLDEN: { id: 'golden', name: 'Golden Fruit', points: 10, spriteIndex: 13, duration: 5000 }
+  APPLE: { id: 'apple', name: 'Terran Planet', points: 1, spriteIndex: 0, planetIndex: 0, weight: 60 },
+  BANANA: { id: 'banana', name: 'Golden Ring Planet', points: 3, spriteIndex: 1, planetIndex: 3, weight: 15 },
+  CHERRY: { id: 'cherry', name: 'Magma World', points: 3, spriteIndex: 6, planetIndex: 1, weight: 15 },
+  STRAWBERRY: { id: 'strawberry', name: 'Nebula Giant', points: 3, spriteIndex: 7, planetIndex: 4, weight: 10 },
+  GOLDEN: { id: 'golden', name: 'Solar Flare Star', points: 10, spriteIndex: 13, planetIndex: 18, duration: 5000 }
 };
 
 export class Food {
@@ -118,6 +118,7 @@ export class Food {
       name: fruit.name,
       points: fruit.points,
       spriteIndex: fruit.spriteIndex,
+      planetIndex: fruit.planetIndex ?? 0,
       isGolden: false,
       timer: 0,
       duration: 0
@@ -144,6 +145,7 @@ export class Food {
       name: fruit.name,
       points: fruit.points,
       spriteIndex: fruit.spriteIndex,
+      planetIndex: fruit.planetIndex ?? 18,
       isGolden: true,
       timer: fruit.duration,
       duration: fruit.duration

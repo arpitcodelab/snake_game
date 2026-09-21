@@ -26,11 +26,14 @@ export class InputManager {
     this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
+    this.handleDpadButton = this.handleDpadButton.bind(this);
 
     this.touchStartX = 0;
     this.touchStartY = 0;
+    this.touchMoved = false;
 
     this.bindEvents();
+    this.bindDpadEvents();
   }
 
   bindEvents() {
@@ -40,6 +43,49 @@ export class InputManager {
       window.addEventListener('touchmove', this.handleTouchMove, { passive: false });
       window.addEventListener('touchend', this.handleTouchEnd, { passive: false });
     }
+  }
+
+  bindDpadEvents() {
+    if (typeof document === 'undefined') return;
+
+    const dpadMap = [
+      { id: 'touch-up', dir: DIR.UP },
+      { id: 'touch-down', dir: DIR.DOWN },
+      { id: 'touch-left', dir: DIR.LEFT },
+      { id: 'touch-right', dir: DIR.RIGHT }
+    ];
+
+    dpadMap.forEach(({ id, dir }) => {
+      const btn = document.getElementById(id);
+      if (btn) {
+        const trigger = (e) => {
+          e.preventDefault();
+          this.triggerHaptic();
+          this.queueDirection(dir);
+        };
+        btn.addEventListener('touchstart', trigger, { passive: false });
+        btn.addEventListener('pointerdown', trigger);
+      }
+    });
+
+    const pauseBtn = document.getElementById('touch-pause');
+    if (pauseBtn) {
+      const triggerPause = (e) => {
+        e.preventDefault();
+        this.triggerHaptic();
+        bus.emit('input:pause');
+      };
+      pauseBtn.addEventListener('touchstart', triggerPause, { passive: false });
+      pauseBtn.addEventListener('pointerdown', triggerPause);
+    }
+  }
+
+  triggerHaptic() {
+    try {
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    } catch (_) {}
   }
 
   unbindEvents() {
@@ -55,31 +101,63 @@ export class InputManager {
     if (e.touches.length > 0) {
       this.touchStartX = e.touches[0].clientX;
       this.touchStartY = e.touches[0].clientY;
+      this.touchMoved = false;
     }
   }
 
   handleTouchMove(e) {
-    // Prevent mobile pull-to-refresh and bouncing while playing
+    // Prevent mobile pull-to-refresh, zooming, and bouncing
     if (e.cancelable) {
       e.preventDefault();
+    }
+
+    if (e.touches.length === 0) return;
+
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const dx = currentX - this.touchStartX;
+    const dy = currentY - this.touchStartY;
+    const minDistance = 20; // 20px threshold for instant continuous responsiveness
+
+    if (Math.abs(dx) >= minDistance || Math.abs(dy) >= minDistance) {
+      if (Math.abs(dx) > Math.abs(dy)) {
+        this.queueDirection(dx > 0 ? DIR.RIGHT : DIR.LEFT);
+      } else {
+        this.queueDirection(dy > 0 ? DIR.DOWN : DIR.UP);
+      }
+      this.triggerHaptic();
+
+      // Reset anchor position to allow continuous chaining without lifting finger
+      this.touchStartX = currentX;
+      this.touchStartY = currentY;
+      this.touchMoved = true;
     }
   }
 
   handleTouchEnd(e) {
-    if (e.changedTouches.length > 0) {
+    // Fallback for very quick flick taps that weren't captured during move
+    if (!this.touchMoved && e.changedTouches.length > 0) {
       const dx = e.changedTouches[0].clientX - this.touchStartX;
       const dy = e.changedTouches[0].clientY - this.touchStartY;
-      const minDistance = 25; // Minimum px swipe threshold
+      const minDistance = 15;
 
-      if (Math.abs(dx) > minDistance || Math.abs(dy) > minDistance) {
-        e.preventDefault();
+      if (Math.abs(dx) >= minDistance || Math.abs(dy) >= minDistance) {
+        if (e.cancelable) {
+          e.preventDefault();
+        }
         if (Math.abs(dx) > Math.abs(dy)) {
           this.queueDirection(dx > 0 ? DIR.RIGHT : DIR.LEFT);
         } else {
           this.queueDirection(dy > 0 ? DIR.DOWN : DIR.UP);
         }
+        this.triggerHaptic();
       }
     }
+  }
+
+  handleDpadButton(dir) {
+    this.triggerHaptic();
+    this.queueDirection(dir);
   }
 
   queueDirection(requestedDir) {
@@ -99,6 +177,8 @@ export class InputManager {
         this.inputQueue.push(requestedDir);
       }
     }
+
+    bus.emit('input:direction', requestedDir);
   }
 
   handleKeyDown(e) {

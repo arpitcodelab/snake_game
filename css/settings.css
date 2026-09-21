@@ -5,16 +5,17 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(14, 15, 22, 0.88);
-  backdrop-filter: blur(14px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 20;
+  z-index: 25;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
-  padding: 20px;
+  padding: 16px;
 }
 
 .panel.active {
@@ -27,45 +28,47 @@
 }
 
 .settings-card {
-  background: var(--board-bg-1);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
+  background: rgba(22, 22, 26, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
   width: 100%;
-  max-width: 360px;
-  padding: 24px;
+  max-width: 340px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  gap: 14px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
 }
 
 .settings-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
 }
 
 .settings-title {
-  font-size: 1.3rem;
+  font-family: 'Nunito', 'Outfit', sans-serif;
+  font-size: 1.25rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  color: #ffffff;
 }
 
 .btn-close {
   background: none;
   border: none;
-  color: var(--text-secondary);
-  font-size: 1.4rem;
+  color: #888888;
+  font-size: 1.5rem;
   cursor: pointer;
-  padding: 4px;
+  padding: 2px 6px;
   line-height: 1;
-  transition: color 0.2s;
+  transition: color 0.15s ease, transform 0.15s ease;
 }
 
 .btn-close:hover {
-  color: #fff;
+  color: #ffffff;
+  transform: scale(1.15);
 }
 
 .setting-group {
@@ -77,30 +80,29 @@
 .setting-label {
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--text-secondary);
+  color: #dcdcdc;
   letter-spacing: 0.5px;
 }
 
 .setting-select {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
   outline: none;
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s ease;
 }
 
 .setting-select:focus {
-  border-color: #4ecca3;
+  border-color: #5df2c2;
 }
 
 .setting-select option {
   background: #1b1c2a;
-  color: #fff;
+  color: #ffffff;
 }
-

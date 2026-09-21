@@ -9,9 +9,9 @@ export const GRID = {
 };
 
 export const SPEED = {
-  BASE_MS: 150,   // Milliseconds per tick at start
-  MIN_MS: 60,     // Maximum speed limit
-  STEP_DOWN: 2    // Reduction in ms per fruit eaten
+  BASE_MS: 230,   // Milliseconds per tick at start (relaxed, smooth pace)
+  MIN_MS: 110,    // Maximum speed limit
+  STEP_DOWN: 1.2  // Reduction in ms per fruit eaten
 };
 
 export const CANVAS = {
@@ -41,5 +41,6 @@ export const GAME_STATE = {
   PLAYING: 'PLAYING',
   PAUSED: 'PAUSED',
   GAME_OVER: 'GAME_OVER',
-  LEADERBOARD: 'LEADERBOARD'
+  LEADERBOARD: 'LEADERBOARD',
+  WIN: 'WIN'
 };

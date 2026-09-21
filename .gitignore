@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Scratch / debug scripts
+scratch/
+
+# Planning & agent metadata
+.planning/
+.kilo/
+.agents/
+
+# Test scripts (not needed in production)
+test_*.js
+
+# Unused snake sprite assets
+assets/images/snake_head.jpg
+assets/images/snake_body.jpg
+assets/images/snake_tail.jpg
+assets/images/snqke.png
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Architecture docs (not needed in repo)
+Architecture.md
+PRD.md

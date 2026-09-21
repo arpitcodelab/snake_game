@@ -10,8 +10,8 @@ export class ThemeSystem {
       desert: {
         id: 'desert',
         name: 'Desert Gold (Google Snake)',
-        header: '#53461c',
-        border: '#ab4e30',
+        header: '#0a0d17',
+        border: '#0c1020',
         bg1: '#fed049',
         bg2: '#f5c338',
         line: 'rgba(0, 0, 0, 0)'
@@ -19,8 +19,8 @@ export class ThemeSystem {
       classic: {
         id: 'classic',
         name: 'Classic Green (Google Snake)',
-        header: '#4a752c',
-        border: '#578a34',
+        header: '#0a0d17',
+        border: '#0c1020',
         bg1: '#aad751',
         bg2: '#a2d149',
         line: 'rgba(0, 0, 0, 0)'
@@ -28,8 +28,8 @@ export class ThemeSystem {
       dark: {
         id: 'dark',
         name: 'AMOLED Black',
-        header: '#111116',
-        border: '#1e1e24',
+        header: '#0a0d17',
+        border: '#0c1020',
         bg1: '#14141a',
         bg2: '#0d0d12',
         line: 'rgba(255, 255, 255, 0.02)'
@@ -37,8 +37,8 @@ export class ThemeSystem {
       forest: {
         id: 'forest',
         name: 'Forest Jungle',
-        header: '#152618',
-        border: '#1f3d23',
+        header: '#0a0d17',
+        border: '#0c1a20',
         bg1: '#244a29',
         bg2: '#1a361e',
         line: 'rgba(100, 220, 100, 0.04)'
@@ -46,8 +46,8 @@ export class ThemeSystem {
       space: {
         id: 'space',
         name: 'Cosmic Space',
-        header: '#101026',
-        border: '#1b1b42',
+        header: '#0a0d17',
+        border: '#0e1028',
         bg1: '#212154',
         bg2: '#17173b',
         line: 'rgba(160, 140, 255, 0.05)'
@@ -55,23 +55,23 @@ export class ThemeSystem {
       ocean: {
         id: 'ocean',
         name: 'Deep Ocean',
-        header: '#0a2238',
-        border: '#103557',
+        header: '#0a0d17',
+        border: '#081828',
         bg1: '#124673',
         bg2: '#0d3457',
         line: 'rgba(0, 210, 211, 0.04)'
       }
     };
 
-    this.activeTheme = 'desert';
+    this.activeTheme = 'dark';
     this.load();
   }
 
   load() {
-    let saved = 'desert';
+    let saved = 'dark';
     try {
       if (typeof localStorage !== 'undefined') {
-        saved = localStorage.getItem('snake_selected_theme') || 'desert';
+        saved = localStorage.getItem('snake_selected_theme') || 'dark';
       }
     } catch (e) {
       console.warn('Could not load theme from storage:', e);

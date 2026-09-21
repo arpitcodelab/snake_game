@@ -19,6 +19,19 @@ export class EventBus {
   }
 
   /**
+   * Subscribe to an event once
+   * @param {string} event
+   * @param {Function} callback
+   */
+  once(event, callback) {
+    const wrapper = (data) => {
+      this.off(event, wrapper);
+      callback(data);
+    };
+    this.on(event, wrapper);
+  }
+
+  /**
    * Unsubscribe from an event
    * @param {string} event
    * @param {Function} callback

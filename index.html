@@ -1,35 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="classic">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>🐍 Modern Snake Game</title>
+  <title>Snake Game</title>
   
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/screens.css">
   <link rel="stylesheet" href="css/hud.css">
   <link rel="stylesheet" href="css/settings.css">
+
   <link rel="stylesheet" href="css/mobile.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Outfit:wght@600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="app">
     <div class="game-card">
-      <!-- Top Header matching Google Snake screenshot -->
+      <!-- Top Header matching snake-game.io & Google Snake -->
       <header class="game-header">
         <div class="header-left">
-          <span class="apple-icon" title="Score"></span>
-          <span id="score-display" class="header-score">0</span>
+          <div class="header-stat">
+            <span class="planet-icon" title="Score">🪐</span>
+            <span id="score-display" class="header-score">0</span>
+          </div>
+          <div class="header-stat">
+            <span class="trophy-sprite trophy-gold" title="Best Score"></span>
+            <span id="high-score-display" class="header-score">0</span>
+          </div>
         </div>
         <div class="header-right">
-          <button id="btn-mute-hud" class="header-sound-btn" title="Toggle Sound">
-            <img src="assets/images/volume_up_white_24dp.png" alt="Sound" class="sound-icon-img" id="sound-icon-img" />
-          </button>
-          <button id="btn-settings-header" class="header-btn-settings" title="Settings">⚙️</button>
         </div>
       </header>
 
@@ -39,111 +42,123 @@
           <!-- The Game Canvas -->
           <canvas id="game-canvas" width="660" height="592"></canvas>
 
-        <!-- In-Game HUD overlay -->
-        <div class="hud-overlay" id="hud-overlay">
-          <div class="hud-item">
-            <span class="hud-icon">🍎</span>
-            <span id="hud-score">0</span>
-          </div>
-          <div class="hud-actions">
-            <button id="btn-pause-hud" class="hud-btn" title="Pause / Resume">⏸</button>
-            <button id="btn-mute-hud" class="hud-btn" title="Mute / Unmute">🔊</button>
-          </div>
-          <div class="hud-item">
-            <span class="hud-icon"><span class="trophy-sprite trophy-gold" style="transform: scale(0.8);"></span></span>
-            <span id="hud-best">0</span>
-          </div>
-        </div>
-
-        <!-- Screen: Start -->
-        <div id="screen-start" class="screen active">
-          <div class="start-title-container">
-            <div class="start-logo">🐍</div>
-            <h1 class="start-heading">SNAKE</h1>
-            <p class="start-subtitle"><span class="trophy-sprite trophy-gold" style="transform: scale(0.85);"></span> High Score: <strong id="start-highscore">0</strong></p>
-          </div>
-          <div class="start-actions">
-            <button id="btn-play" class="btn-primary">PLAY NOW</button>
-            <button id="btn-leaderboard-start" class="btn-secondary">🏆 LEADERBOARD</button>
-            <button id="btn-settings-start" class="btn-secondary">⚙️ SETTINGS</button>
-          </div>
-        </div>
-
-        <!-- Screen: Game Over -->
-        <div id="screen-gameover" class="screen hidden">
-          <div class="gameover-header">
-            <div id="go-trophy-badge" class="trophy-large gold" style="display: none;"></div>
-            <h2 class="gameover-heading">GAME OVER</h2>
-          </div>
-          <div class="gameover-card">
-            <div class="score-row">
-              <span>Score</span>
-              <span id="go-score" class="value">0</span>
+          <!-- In-Game HUD overlay -->
+          <div class="hud-overlay" id="hud-overlay" style="display: none;">
+            <div class="hud-item">
+              <span class="hud-icon planet-hud-icon">🪐</span>
+              <span id="hud-score">0</span>
             </div>
-            <div class="score-row">
-              <span>Best</span>
-              <span id="go-best" class="value">0</span>
+            <div class="hud-actions">
+              <button id="btn-pause-hud" class="hud-btn" title="Pause / Resume">⏸</button>
             </div>
-            <span id="go-new-high-badge" class="badge-new-high" style="display: none;">NEW HIGH SCORE! 🎉</span>
+            <div class="hud-item">
+              <span class="hud-icon"><span class="trophy-sprite trophy-gold" style="transform: scale(0.8);"></span></span>
+              <span id="hud-best">0</span>
+            </div>
+          </div>
 
-            <div id="go-initials-container" class="initials-container" style="display: none;">
-              <span class="initials-label">ENTER INITIALS</span>
-              <div class="initials-input-row">
-                <input type="text" id="go-input-initials" class="input-initials" maxlength="3" placeholder="AAA" autocomplete="off" />
-                <button id="btn-save-initials" class="btn-save-initials">SAVE</button>
+          <!-- Screen: Start Overlay (Ready State) -->
+          <div id="screen-start" class="screen active">
+            <div class="start-card">
+              <div class="ready-badge"><span class="pulse-dot"></span>SYS READY</div>
+              <div class="start-logo">
+                <img src="assets/images/snqke.png" alt="Cyber Snake" class="start-snake-hero" />
+              </div>
+              <h1 class="start-heading">SNAKE GAME</h1>
+              <p class="start-subtitle">
+                <span class="trophy-sprite trophy-gold" style="transform: scale(0.85);"></span>
+                HIGH SCORE: <strong id="start-highscore">0</strong>
+              </p>
+              <div class="start-actions">
+                <button id="btn-play" class="btn-primary">INITIALIZE RUN</button>
+                <div class="start-sub-actions">
+                  <button id="btn-settings-start" class="btn-secondary">⚙️ Settings</button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="start-actions">
-            <button id="btn-replay" class="btn-primary">PLAY AGAIN</button>
-            <button id="btn-go-leaderboard" class="btn-secondary">🏆 LEADERBOARD</button>
-            <button id="btn-menu" class="btn-secondary">MAIN MENU</button>
-          </div>
-        </div>
 
-        <!-- Screen: Leaderboard -->
-        <div id="screen-leaderboard" class="screen hidden">
-          <h2 class="leaderboard-heading">🏆 HIGH SCORES</h2>
-          <select id="leaderboard-mode-select" class="leaderboard-mode-select"></select>
-          <div class="leaderboard-container">
-            <ul id="leaderboard-list" class="leaderboard-list"></ul>
-          </div>
-          <div class="start-actions">
-            <button id="btn-leaderboard-back" class="btn-secondary">BACK TO MENU</button>
-          </div>
-        </div>
+          <!-- Screen: Game Over matching snake-game.io -->
+          <div id="screen-gameover" class="screen hidden">
+            <div class="gameover-card">
+              <div class="gameover-header">
+                <div id="go-trophy-badge" class="trophy-large gold" style="display: none;"></div>
+                <h2 class="gameover-heading">SNAKE GAME</h2>
+              </div>
+              <div class="score-summary">
+                <div class="score-row">
+                  <div class="score-label">
+                    <span class="planet-icon" style="font-size: 1.2rem;">🪐</span>
+                    <span>Score</span>
+                  </div>
+                  <span id="go-score" class="value">0</span>
+                </div>
+                <div class="score-row">
+                  <div class="score-label">
+                    <span class="trophy-sprite trophy-gold" style="transform: scale(0.85);"></span>
+                    <span>Best</span>
+                  </div>
+                  <span id="go-best" class="value">0</span>
+                </div>
+              </div>
+              <span id="go-new-high-badge" class="badge-new-high" style="display: none;">NEW HIGH SCORE! 🎉</span>
 
-        <!-- Panel: Settings Modal -->
-        <div id="panel-settings" class="panel hidden">
-          <div class="settings-card">
-            <div class="settings-header">
-              <h3 class="settings-title">⚙️ Game Settings</h3>
-              <button id="btn-close-settings" class="btn-close">&times;</button>
-            </div>
-            <div class="setting-group">
-              <label for="setting-game-mode" class="setting-label">GAME MODE</label>
-              <select id="setting-game-mode" class="setting-select"></select>
-            </div>
-            <div class="setting-group">
-              <label for="setting-board-size" class="setting-label">BOARD SIZE</label>
-              <select id="setting-board-size" class="setting-select"></select>
-            </div>
-            <div class="setting-group">
-              <label for="setting-fruits-count" class="setting-label">FRUITS ON SCREEN</label>
-              <select id="setting-fruits-count" class="setting-select"></select>
-            </div>
-            <div class="setting-group">
-              <label for="setting-theme" class="setting-label">BOARD THEME</label>
-              <select id="setting-theme" class="setting-select"></select>
-            </div>
-            <div class="setting-group">
-              <label for="setting-skin" class="setting-label">SNAKE SKIN</label>
-              <select id="setting-skin" class="setting-select"></select>
+              <div class="gameover-actions">
+                <button id="btn-replay" class="btn-primary">
+                  <img src="assets/images/refresh_white_24dp.png" alt="Replay" class="btn-icon-img" />
+                  PLAY AGAIN
+                </button>
+              </div>
             </div>
           </div>
+
+          <!-- Panel: Settings Modal -->
+          <div id="panel-settings" class="panel hidden">
+            <div class="settings-card">
+              <div class="settings-header">
+                <h3 class="settings-title">⚙️ Game Settings</h3>
+                <button id="btn-close-settings" class="btn-close">&times;</button>
+              </div>
+              <div class="setting-group">
+                <label for="setting-game-mode" class="setting-label">GAME MODE</label>
+                <select id="setting-game-mode" class="setting-select"></select>
+              </div>
+              <div class="setting-group">
+                <label for="setting-board-size" class="setting-label">BOARD SIZE</label>
+                <select id="setting-board-size" class="setting-select"></select>
+              </div>
+              <div class="setting-group">
+                <label for="setting-fruits-count" class="setting-label">FRUITS ON SCREEN</label>
+                <select id="setting-fruits-count" class="setting-select"></select>
+              </div>
+              <div class="setting-group">
+                <label for="setting-theme" class="setting-label">BOARD THEME</label>
+                <select id="setting-theme" class="setting-select"></select>
+              </div>
+              <div class="setting-group">
+                <label for="setting-skin" class="setting-label">SNAKE SKIN</label>
+                <select id="setting-skin" class="setting-select"></select>
+              </div>
+              <div class="setting-group">
+                <label for="setting-quality" class="setting-label">GRAPHICAL QUALITY</label>
+                <select id="setting-quality" class="setting-select">
+                  <option value="auto">⚡ Auto (Adaptive)</option>
+                  <option value="high">💎 High (Full FX)</option>
+                  <option value="medium">⚖️ Medium (Balanced)</option>
+                  <option value="low">🚀 Low (Performance)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
+
+    <!-- Mobile Swipe Hint (replaces D-Pad) -->
+    <div class="swipe-hint" id="swipe-hint">
+      <span class="swipe-hint-text">⟵ Swipe to move · Tap to pause ⟶</span>
     </div>
 
     <!-- Desktop Keyboard Guide Footer -->
