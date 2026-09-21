@@ -71,16 +71,18 @@ export class LeaderboardScreen {
       return;
     }
 
-    const medals = ['🥇', '🥈', '🥉'];
+    const trophies = ['trophy-gold', 'trophy-silver', 'trophy-bronze'];
 
     scores.forEach((entry, idx) => {
       const li = document.createElement('li');
       li.className = 'leaderboard-row';
-      const rankBadge = idx < 3 ? medals[idx] : `#${idx + 1}`;
+      const rankBadge = idx < 3
+        ? `<span class="trophy-sprite ${trophies[idx]}"></span>`
+        : `<span class="rank-badge">#${idx + 1}</span>`;
 
       li.innerHTML = `
         <div class="rank-col">
-          <span class="rank-badge">${rankBadge}</span>
+          ${rankBadge}
           <span class="initials">${entry.initials}</span>
         </div>
         <div class="score-col">

@@ -6,8 +6,6 @@ import { CollisionSystem } from '../systems/CollisionSystem.js';
 import { ScoreSystem } from '../systems/ScoreSystem.js';
 import { Renderer } from '../renderer/Renderer.js';
 import { modeManager } from '../modes/ModeManager.js';
-import { AudioManager } from '../audio/AudioManager.js';
-import { ParticleSystem } from '../effects/ParticleSystem.js';
 import { bus } from './EventBus.js';
 import { GRID, SPEED, GAME_STATE, DIR } from '../utils/Constants.js';
 
@@ -30,11 +28,6 @@ export class Game {
     this.collisionSystem = new CollisionSystem();
     this.scoreSystem = new ScoreSystem();
     this.food = new Food();
-    this.audioManager = new AudioManager();
-    this.particleSystem = new ParticleSystem();
-
-    this.prevHighScore = 0;
-    this.celebratedHighScore = false;
 
     this.snake = new Snake(
       { x: Math.floor(this.grid.cols / 2), y: Math.floor(this.grid.rows / 2) },
@@ -58,33 +51,6 @@ export class Game {
     bus.on('input:pause', () => this.togglePause());
     bus.on('input:restart', () => this.restart());
     bus.on('game:over', () => this.handleGameOver());
-
-    bus.on('food:eaten', ({ food, points, score }) => {
-      const cellW = this.renderer.logicalSize / this.grid.cols;
-      const cellH = this.renderer.logicalSize / this.grid.rows;
-      const cx = (food.x + 0.5) * cellW;
-      const cy = (food.y + 0.5) * cellH;
-
-      const colors = {
-        apple: '#ff4757',
-        banana: '#ffa502',
-        cherry: '#e84118',
-        strawberry: '#ff6b81',
-        gold: '#ffd700'
-      };
-      const color = colors[food.type] || '#ffd700';
-
-      this.particleSystem.spawnFruitBurst(cx, cy, color, food.isSpecial ? 24 : 16);
-      this.particleSystem.spawnFloatingScore(`+${points}`, cx, cy - 10, color);
-      this.audioManager.playEat(food.points > 1, food.type === 'gold');
-
-      // Check if player just broke the high score during this run
-      if (this.prevHighScore > 0 && score > this.prevHighScore && !this.celebratedHighScore) {
-        this.celebratedHighScore = true;
-        this.audioManager.playHighScore();
-        bus.emit('highscore:beaten', { score });
-      }
-    });
 
     const pauseHudBtn = document.getElementById('btn-pause-hud');
     if (pauseHudBtn) {
@@ -129,10 +95,6 @@ export class Game {
 
   start() {
     this.state = GAME_STATE.PLAYING;
-    this.particleSystem.reset();
-    this.prevHighScore = this.scoreSystem.highScore;
-    this.celebratedHighScore = false;
-
     this.snake.reset(
       { x: Math.floor(this.grid.cols / 2), y: Math.floor(this.grid.rows / 2) },
       3,
@@ -168,9 +130,6 @@ export class Game {
     this.snake.isDead = true;
     this.loop.stop();
 
-    this.audioManager.playDie();
-    this.renderer.triggerScreenShake(350, 8);
-
     this.updateHUD();
     console.log('💀 GAME OVER! Score:', this.scoreSystem.score);
   }
@@ -200,9 +159,6 @@ export class Game {
    */
   update(tickDelta) {
     if (this.state !== GAME_STATE.PLAYING) return;
-
-    // Update particle effects and floating score text
-    this.particleSystem.update(tickDelta / 1000);
 
     // 1. Mode-specific update hook (e.g. moving targets)
     this.mode.onUpdate(tickDelta, this.snake, this.food, this.grid);
@@ -255,7 +211,7 @@ export class Game {
    * Render frame (60fps)
    */
   render(interpolation) {
-    this.renderer.draw(this.snake, this.food, this.grid, this.mode, this.particleSystem, 16.67);
+    this.renderer.draw(this.snake, this.food, this.grid, this.mode);
   }
 }
 

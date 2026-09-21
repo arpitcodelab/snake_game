@@ -12,6 +12,7 @@ export class GameOverScreen {
     this.scoreEl = document.getElementById('go-score');
     this.bestEl = document.getElementById('go-best');
     this.newHighBadge = document.getElementById('go-new-high-badge');
+    this.trophyBadge = document.getElementById('go-trophy-badge');
     this.btnReplay = document.getElementById('btn-replay');
     this.btnMenu = document.getElementById('btn-menu');
     this.btnViewLeaderboard = document.getElementById('btn-go-leaderboard');
@@ -49,8 +50,8 @@ export class GameOverScreen {
     }
 
     if (this.btnSaveInitials && this.inputInitials) {
-      this.btnSaveInitials.addEventListener('click', () => {
-        const initials = this.inputInitials.value || 'AAA';
+      const saveHandler = () => {
+        const initials = (this.inputInitials.value || 'AAA').trim().toUpperCase().slice(0, 3);
         if (this.leaderboard) {
           this.leaderboard.addScore(initials, this.currentScore, this.game.mode.id);
         }
@@ -58,6 +59,11 @@ export class GameOverScreen {
           this.initialsContainer.style.display = 'none';
         }
         bus.emit('leaderboard:open', { mode: this.game.mode.id });
+      };
+
+      this.btnSaveInitials.addEventListener('click', saveHandler);
+      this.inputInitials.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') saveHandler();
       });
     }
   }
@@ -72,6 +78,21 @@ export class GameOverScreen {
 
     if (this.newHighBadge) {
       this.newHighBadge.style.display = isNewHigh ? 'inline-block' : 'none';
+    }
+
+    if (this.trophyBadge) {
+      if (isNewHigh) {
+        this.trophyBadge.className = 'trophy-large gold';
+        this.trophyBadge.style.display = 'inline-block';
+      } else if (score >= highScore * 0.75 && score > 0) {
+        this.trophyBadge.className = 'trophy-large silver';
+        this.trophyBadge.style.display = 'inline-block';
+      } else if (score >= highScore * 0.5 && score > 0) {
+        this.trophyBadge.className = 'trophy-large bronze';
+        this.trophyBadge.style.display = 'inline-block';
+      } else {
+        this.trophyBadge.style.display = 'none';
+      }
     }
 
     // Check if score qualifies for leaderboard

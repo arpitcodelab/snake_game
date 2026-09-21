@@ -22,7 +22,9 @@ export class Renderer {
     this.shakeIntensity = 0;
 
     this.setupHighDpi();
-    window.addEventListener('resize', () => this.setupHighDpi());
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', () => this.setupHighDpi());
+    }
   }
 
   /**
@@ -40,6 +42,7 @@ export class Renderer {
    * Set up high-DPI (Retina) scaling to eliminate blurriness
    */
   setupHighDpi() {
+    if (typeof window === 'undefined') return;
     const dpr = window.devicePixelRatio || 1;
     
     // Physical pixel size of canvas backing store
@@ -48,7 +51,7 @@ export class Renderer {
 
     // Reset transform and scale to logical units
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    this.ctx.imageSmoothingEnabled = false;
+    this.ctx.imageSmoothingEnabled = true;
   }
 
   /**
@@ -89,9 +92,9 @@ export class Renderer {
       this.foodRenderer.draw(this.ctx, food.items, cellWidth, cellHeight);
     }
 
-    // 3. Draw snake
+    // 3. Draw realistic snake with continuous body, tongue flick & blinking eyes
     if (snake) {
-      this.snakeRenderer.draw(this.ctx, snake, cellWidth, cellHeight, mode);
+      this.snakeRenderer.draw(this.ctx, snake, cellWidth, cellHeight, mode, frameDeltaMs);
     }
 
     // 4. Draw particle effects and floating score text
@@ -104,4 +107,3 @@ export class Renderer {
     }
   }
 }
-

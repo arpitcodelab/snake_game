@@ -6,7 +6,7 @@
 - [x] **Phase 3: Game Modes Engine**
 - [x] **Phase 4: UI Screens, HUD & Mobile Controls**
 - [x] **Phase 5: Skins, Themes & Local Storage**
-- [x] **Phase 6: Audio, Particles & Visual Polish**
+- [ ] **Phase 6: Audio, Particles & Visual Polish**
 
 ---
 
@@ -18,7 +18,7 @@
 | 3. Game Modes Engine | 1/1 | Completed | 2026-09-21 |
 | 4. UI Screens, HUD & Mobile Controls | 1/1 | Completed | 2026-09-21 |
 | 5. Skins, Themes & Local Storage | 1/1 | Completed | 2026-09-21 |
-| 6. Audio, Particles & Visual Polish | 1/1 | Completed | 2026-09-21 |
+| 6. Audio, Particles & Visual Polish | 0/1 | Not started | - |
 
 ---
 

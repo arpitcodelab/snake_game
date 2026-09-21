@@ -26,12 +26,18 @@
       </div>
       <div class="quick-stats">
         <div class="stat-box">
-          <span class="stat-label">SCORE</span>
-          <span id="score-display" class="stat-value">0</span>
+          <span class="stat-icon">🍎</span>
+          <div class="stat-info">
+            <span class="stat-label">SCORE</span>
+            <span id="score-display" class="stat-value">0</span>
+          </div>
         </div>
         <div class="stat-box">
-          <span class="stat-label">BEST</span>
-          <span id="high-score-display" class="stat-value">0</span>
+          <span class="stat-icon"><span class="trophy-sprite trophy-gold"></span></span>
+          <div class="stat-info">
+            <span class="stat-label">BEST</span>
+            <span id="high-score-display" class="stat-value">0</span>
+          </div>
         </div>
       </div>
     </header>
@@ -53,7 +59,7 @@
             <button id="btn-mute-hud" class="hud-btn" title="Mute / Unmute">🔊</button>
           </div>
           <div class="hud-item">
-            <span class="hud-icon">🏆</span>
+            <span class="hud-icon"><span class="trophy-sprite trophy-gold" style="transform: scale(0.8);"></span></span>
             <span id="hud-best">0</span>
           </div>
         </div>
@@ -63,7 +69,7 @@
           <div class="start-title-container">
             <div class="start-logo">🐍</div>
             <h1 class="start-heading">SNAKE</h1>
-            <p class="start-subtitle">High Score: <strong id="start-highscore">0</strong></p>
+            <p class="start-subtitle"><span class="trophy-sprite trophy-gold" style="transform: scale(0.85);"></span> High Score: <strong id="start-highscore">0</strong></p>
           </div>
           <div class="start-actions">
             <button id="btn-play" class="btn-primary">PLAY NOW</button>
@@ -74,7 +80,10 @@
 
         <!-- Screen: Game Over -->
         <div id="screen-gameover" class="screen hidden">
-          <h2 class="gameover-heading">GAME OVER</h2>
+          <div class="gameover-header">
+            <div id="go-trophy-badge" class="trophy-large gold" style="display: none;"></div>
+            <h2 class="gameover-heading">GAME OVER</h2>
+          </div>
           <div class="gameover-card">
             <div class="score-row">
               <span>Score</span>
@@ -89,7 +98,7 @@
             <div id="go-initials-container" class="initials-container" style="display: none;">
               <span class="initials-label">ENTER INITIALS</span>
               <div class="initials-input-row">
-                <input type="text" id="go-input-initials" class="input-initials" maxlength="3" placeholder="AAA" />
+                <input type="text" id="go-input-initials" class="input-initials" maxlength="3" placeholder="AAA" autocomplete="off" />
                 <button id="btn-save-initials" class="btn-save-initials">SAVE</button>
               </div>
             </div>

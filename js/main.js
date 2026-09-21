@@ -37,24 +37,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const settingsPanel = new SettingsPanel(screenManager, game, themeSystem, skinSystem);
   const leaderboardScreen = new LeaderboardScreen(screenManager, leaderboardSystem);
 
-  // Wire up HUD mute button
-  const muteHudBtn = document.getElementById('btn-mute-hud');
-  if (muteHudBtn) {
-    const updateMuteIcon = (isMuted) => {
-      muteHudBtn.textContent = isMuted ? '🔇' : '🔊';
-    };
-    updateMuteIcon(game.audioManager.isMuted);
-
-    muteHudBtn.addEventListener('click', () => {
-      const isMuted = game.audioManager.toggleMute();
-      updateMuteIcon(isMuted);
-    });
-
-    bus.on('audio:mute_changed', ({ isMuted }) => {
-      updateMuteIcon(isMuted);
-    });
-  }
-
   // Show start screen initially
   screenManager.showScreen('start');
 
@@ -64,7 +46,5 @@ window.addEventListener('DOMContentLoaded', () => {
   window.__THEME_SYSTEM__ = themeSystem;
   window.__SKIN_SYSTEM__ = skinSystem;
   window.__LEADERBOARD_SYSTEM__ = leaderboardSystem;
-  window.__AUDIO_MGR__ = game.audioManager;
-  window.__PARTICLE_SYS__ = game.particleSystem;
 });
 
