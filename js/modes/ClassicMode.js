@@ -8,3 +8,4 @@ export class ClassicMode extends GameMode {
     super('classic', 'Classic', 'Standard snake — walls and self-collision are fatal');
   }
 }
+

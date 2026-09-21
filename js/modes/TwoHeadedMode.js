@@ -47,3 +47,4 @@ export class TwoHeadedMode extends GameMode {
     return { handled: true, collided: false };
   }
 }
+

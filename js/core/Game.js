@@ -51,6 +51,11 @@ export class Game {
     bus.on('input:pause', () => this.togglePause());
     bus.on('input:restart', () => this.restart());
     bus.on('game:over', () => this.handleGameOver());
+
+    const pauseHudBtn = document.getElementById('btn-pause-hud');
+    if (pauseHudBtn) {
+      pauseHudBtn.addEventListener('click', () => this.togglePause());
+    }
   }
 
   /**
@@ -62,6 +67,29 @@ export class Game {
     console.log('🎮 Mode changed to:', this.mode.name);
     if (this.state === GAME_STATE.PLAYING) {
       this.restart();
+    }
+  }
+
+  /**
+   * Set grid dimensions
+   * @param {object} gridObj - { cols, rows }
+   */
+  setGrid(gridObj) {
+    if (!gridObj || !gridObj.cols || !gridObj.rows) return;
+    this.grid = { ...gridObj };
+    if (this.state === GAME_STATE.PLAYING) {
+      this.restart();
+    }
+  }
+
+  /**
+   * Set active fruit count
+   * @param {number} count
+   */
+  setFruitCount(count) {
+    this.food.setTargetCount(count);
+    if (this.state === GAME_STATE.PLAYING) {
+      this.food.ensurePopulation(this.snake.body, this.grid);
     }
   }
 
@@ -78,6 +106,7 @@ export class Game {
     const baseSpeed = Math.round(SPEED.BASE_MS / this.mode.getSpeedModifier());
     this.loop.setSpeed(baseSpeed);
     this.loop.start();
+    this.updateHUD();
     console.log('🐍 Game started! Mode:', this.mode.name, 'Grid:', this.grid.cols, 'x', this.grid.rows);
   }
 
@@ -92,6 +121,7 @@ export class Game {
 
     const isPaused = this.loop.togglePause();
     this.state = isPaused ? GAME_STATE.PAUSED : GAME_STATE.PLAYING;
+    this.updateHUD();
     console.log(isPaused ? '⏸ Game Paused' : '▶ Game Resumed');
   }
 
@@ -105,10 +135,23 @@ export class Game {
   }
 
   updateHUD() {
+    const scoreStr = this.scoreSystem.score.toString();
+    const highScoreStr = this.scoreSystem.highScore.toString();
+
     const scoreEl = document.getElementById('score-display');
     const highScoreEl = document.getElementById('high-score-display');
-    if (scoreEl) scoreEl.textContent = this.scoreSystem.score.toString();
-    if (highScoreEl) highScoreEl.textContent = this.scoreSystem.highScore.toString();
+    const hudScoreEl = document.getElementById('hud-score');
+    const hudBestEl = document.getElementById('hud-best');
+    const pauseHudBtn = document.getElementById('btn-pause-hud');
+
+    if (scoreEl) scoreEl.textContent = scoreStr;
+    if (highScoreEl) highScoreEl.textContent = highScoreStr;
+    if (hudScoreEl) hudScoreEl.textContent = scoreStr;
+    if (hudBestEl) hudBestEl.textContent = highScoreStr;
+
+    if (pauseHudBtn) {
+      pauseHudBtn.textContent = this.state === GAME_STATE.PAUSED ? '▶' : '⏸';
+    }
   }
 
   /**

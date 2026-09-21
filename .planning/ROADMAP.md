@@ -4,7 +4,7 @@
 - [x] **Phase 1: Project Foundation & Core Canvas Loop**
 - [x] **Phase 2: Fruit System & Collision Mechanics**
 - [x] **Phase 3: Game Modes Engine**
-- [ ] **Phase 4: UI Screens, HUD & Mobile Controls**
+- [x] **Phase 4: UI Screens, HUD & Mobile Controls**
 - [ ] **Phase 5: Skins, Themes & Local Storage**
 - [ ] **Phase 6: Audio, Particles & Visual Polish**
 
@@ -16,7 +16,7 @@
 | 1. Project Foundation & Core Canvas Loop | 1/1 | Completed | 2026-09-21 |
 | 2. Fruit System & Collision Mechanics | 1/1 | Completed | 2026-09-21 |
 | 3. Game Modes Engine | 1/1 | Completed | 2026-09-21 |
-| 4. UI Screens, HUD & Mobile Controls | 0/1 | Not started | - |
+| 4. UI Screens, HUD & Mobile Controls | 1/1 | Completed | 2026-09-21 |
 | 5. Skins, Themes & Local Storage | 0/1 | Not started | - |
 | 6. Audio, Particles & Visual Polish | 0/1 | Not started | - |
 
@@ -69,7 +69,7 @@
   3. Settings panel allows players to configure game mode, board size (20x20, 30x30, 40x40), and fruit count before playing.
   4. On mobile devices, swipe gestures and on-screen D-pad control snake movement without page scrolling or gestures.
   5. Canvas automatically scales to fit viewport maintaining square aspect ratio and sharp High-DPI resolution.
-**Plans**: TBD
+**Plans**: 04-01-PLAN.md (Completed)
 **UI hint**: yes
 
 ### Phase 5: Skins, Themes & Local Storage

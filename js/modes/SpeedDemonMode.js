@@ -16,3 +16,4 @@ export class SpeedDemonMode extends GameMode {
     return 2; // Doubles fruit points
   }
 }
+

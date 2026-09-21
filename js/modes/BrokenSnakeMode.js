@@ -20,3 +20,4 @@ export class BrokenSnakeMode extends GameMode {
     return index % 3 !== 0;
   }
 }
+

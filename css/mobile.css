@@ -1,0 +1,59 @@
+/* Mobile Touch Controls & D-Pad */
+#mobile-controls {
+  display: none;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 10px;
+  touch-action: none;
+  user-select: none;
+}
+
+.dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.dpad-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.dpad-btn {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1.4rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.1s ease;
+  touch-action: manipulation;
+}
+
+.dpad-btn:active {
+  background: rgba(78, 204, 163, 0.3);
+  border-color: #4ecca3;
+  transform: scale(0.92);
+}
+
+/* Show D-Pad on smaller screens or touch devices */
+@media (max-width: 768px), (pointer: coarse) {
+  #mobile-controls {
+    display: block;
+  }
+  .controls-hint {
+    display: none;
+  }
+}

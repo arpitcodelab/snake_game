@@ -26,3 +26,4 @@ export class NoWallsMode extends GameMode {
     return { handled: true, collided: false };
   }
 }
+

@@ -57,3 +57,4 @@ export class MovingTargetsMode extends GameMode {
     }
   }
 }
+

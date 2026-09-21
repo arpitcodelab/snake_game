@@ -23,15 +23,103 @@ export class InputManager {
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
+
+    this.touchStartX = 0;
+    this.touchStartY = 0;
+
     this.bindEvents();
+    this.setupDPad();
   }
 
   bindEvents() {
-    window.addEventListener('keydown', this.handleKeyDown);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('keydown', this.handleKeyDown);
+
+      const canvas = document.getElementById('game-canvas');
+      if (canvas) {
+        canvas.addEventListener('touchstart', this.handleTouchStart, { passive: false });
+        canvas.addEventListener('touchend', this.handleTouchEnd, { passive: false });
+      }
+    }
   }
 
   unbindEvents() {
-    window.removeEventListener('keydown', this.handleKeyDown);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('keydown', this.handleKeyDown);
+      const canvas = document.getElementById('game-canvas');
+      if (canvas) {
+        canvas.removeEventListener('touchstart', this.handleTouchStart);
+        canvas.removeEventListener('touchend', this.handleTouchEnd);
+      }
+    }
+  }
+
+  setupDPad() {
+    if (typeof document === 'undefined') return;
+
+    const dpadButtons = document.querySelectorAll('[data-dir]');
+    const dirMap = {
+      up: DIR.UP,
+      down: DIR.DOWN,
+      left: DIR.LEFT,
+      right: DIR.RIGHT
+    };
+
+    dpadButtons.forEach(btn => {
+      const trigger = (e) => {
+        e.preventDefault();
+        const dir = dirMap[btn.dataset.dir];
+        if (dir) this.queueDirection(dir);
+      };
+
+      btn.addEventListener('touchstart', trigger, { passive: false });
+      btn.addEventListener('click', trigger);
+    });
+  }
+
+  handleTouchStart(e) {
+    if (e.touches.length > 0) {
+      this.touchStartX = e.touches[0].clientX;
+      this.touchStartY = e.touches[0].clientY;
+    }
+  }
+
+  handleTouchEnd(e) {
+    if (e.changedTouches.length > 0) {
+      const dx = e.changedTouches[0].clientX - this.touchStartX;
+      const dy = e.changedTouches[0].clientY - this.touchStartY;
+      const minDistance = 25; // Minimum px swipe threshold
+
+      if (Math.abs(dx) > minDistance || Math.abs(dy) > minDistance) {
+        e.preventDefault();
+        if (Math.abs(dx) > Math.abs(dy)) {
+          this.queueDirection(dx > 0 ? DIR.RIGHT : DIR.LEFT);
+        } else {
+          this.queueDirection(dy > 0 ? DIR.DOWN : DIR.UP);
+        }
+      }
+    }
+  }
+
+  queueDirection(requestedDir) {
+    if (!requestedDir) return;
+
+    // Check against the last queued direction or the last polled direction
+    const referenceDir = this.inputQueue.length > 0 
+      ? this.inputQueue[this.inputQueue.length - 1] 
+      : this.lastPolledDir;
+
+    // Reject if opposite to reference direction or identical
+    if (
+      requestedDir.name !== referenceDir.name &&
+      OPPOSITE_DIR[requestedDir.name] !== referenceDir.name
+    ) {
+      if (this.inputQueue.length < this.maxQueueSize) {
+        this.inputQueue.push(requestedDir);
+      }
+    }
   }
 
   handleKeyDown(e) {
@@ -52,21 +140,7 @@ export class InputManager {
     const requestedDir = this.keyMap[e.code];
     if (requestedDir) {
       e.preventDefault(); // Stop browser scrolling
-
-      // Check against the last queued direction or the last polled direction
-      const referenceDir = this.inputQueue.length > 0 
-        ? this.inputQueue[this.inputQueue.length - 1] 
-        : this.lastPolledDir;
-
-      // Reject if opposite to reference direction or identical
-      if (
-        requestedDir.name !== referenceDir.name &&
-        OPPOSITE_DIR[requestedDir.name] !== referenceDir.name
-      ) {
-        if (this.inputQueue.length < this.maxQueueSize) {
-          this.inputQueue.push(requestedDir);
-        }
-      }
+      this.queueDirection(requestedDir);
     }
   }
 

@@ -1,4 +1,8 @@
 import { Game } from './core/Game.js';
+import { ScreenManager } from './ui/ScreenManager.js';
+import { StartScreen } from './ui/StartScreen.js';
+import { GameOverScreen } from './ui/GameOverScreen.js';
+import { SettingsPanel } from './ui/SettingsPanel.js';
 
 window.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('game-canvas');
@@ -7,11 +11,19 @@ window.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Initialize Game engine
   const game = new Game(canvas);
-  // Auto-start for Phase 1 testing
-  game.start();
 
-  // Expose to window for debugging in developer console
+  // Initialize UI systems
+  const screenManager = new ScreenManager();
+  const startScreen = new StartScreen(screenManager, game);
+  const gameOverScreen = new GameOverScreen(screenManager, game);
+  const settingsPanel = new SettingsPanel(screenManager, game);
+
+  // Show start screen initially
+  screenManager.showScreen('start');
+
+  // Expose to window for testing / debugging
   window.__SNAKE_GAME__ = game;
+  window.__SCREEN_MGR__ = screenManager;
 });
-
