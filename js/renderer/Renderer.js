@@ -5,14 +5,18 @@ import { CANVAS } from '../utils/Constants.js';
 
 /**
  * Master Renderer managing Canvas context, High-DPI scaling, and rendering pipeline
+ * with Google Snake bordered grid layout.
  */
 export class Renderer {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d', { alpha: false });
-    this.logicalSize = CANVAS.LOGICAL_SIZE;
-    
-    this.gridRenderer = new GridRenderer();
+    this.logicalWidth = CANVAS.LOGICAL_WIDTH || 660;
+    this.logicalHeight = CANVAS.LOGICAL_HEIGHT || 592;
+    this.borderX = CANVAS.BORDER_X || 24;
+    this.borderY = CANVAS.BORDER_Y || 26;
+
+    this.gridRenderer = new GridRenderer(this.borderX, this.borderY);
     this.snakeRenderer = new SnakeRenderer();
     this.foodRenderer = new FoodRenderer();
 
@@ -39,17 +43,17 @@ export class Renderer {
   }
 
   /**
-   * Set up high-DPI (Retina) scaling to eliminate blurriness
+   * Set up high-DPI scaling
    */
   setupHighDpi() {
     if (typeof window === 'undefined') return;
     const dpr = window.devicePixelRatio || 1;
-    
-    // Physical pixel size of canvas backing store
-    this.canvas.width = Math.round(this.logicalSize * dpr);
-    this.canvas.height = Math.round(this.logicalSize * dpr);
 
-    // Reset transform and scale to logical units
+    // Physical pixel size
+    this.canvas.width = Math.round(this.logicalWidth * dpr);
+    this.canvas.height = Math.round(this.logicalHeight * dpr);
+
+    // Scale to logical units
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this.ctx.imageSmoothingEnabled = true;
   }
@@ -64,10 +68,10 @@ export class Renderer {
    * @param {number} [frameDeltaMs]
    */
   draw(snake, food, grid, mode = null, particleSystem = null, frameDeltaMs = 16.67) {
-    const width = this.logicalSize;
-    const height = this.logicalSize;
-    const cellWidth = width / grid.cols;
-    const cellHeight = height / grid.rows;
+    const gridW = this.logicalWidth - this.borderX * 2;
+    const gridH = this.logicalHeight - this.borderY * 2;
+    const cellWidth = gridW / grid.cols;
+    const cellHeight = gridH / grid.rows;
 
     let isShaking = false;
     if (this.shakeRemaining > 0) {
@@ -84,17 +88,17 @@ export class Renderer {
       if (this.shakeRemaining < 0) this.shakeRemaining = 0;
     }
 
-    // 1. Draw board background & grid
-    this.gridRenderer.draw(this.ctx, width, height, grid.cols, grid.rows);
+    // 1. Draw board border & checkerboard
+    this.gridRenderer.draw(this.ctx, this.logicalWidth, this.logicalHeight, grid.cols, grid.rows);
 
-    // 2. Draw active food items
+    // 2. Draw active food items (with border offset)
     if (food && food.items) {
-      this.foodRenderer.draw(this.ctx, food.items, cellWidth, cellHeight);
+      this.foodRenderer.draw(this.ctx, food.items, cellWidth, cellHeight, this.borderX, this.borderY);
     }
 
-    // 3. Draw realistic snake with continuous body, tongue flick & blinking eyes
+    // 3. Draw snake (with border offset)
     if (snake) {
-      this.snakeRenderer.draw(this.ctx, snake, cellWidth, cellHeight, mode, frameDeltaMs);
+      this.snakeRenderer.draw(this.ctx, snake, cellWidth, cellHeight, mode, frameDeltaMs, this.borderX, this.borderY);
     }
 
     // 4. Draw particle effects and floating score text

@@ -1,42 +1,66 @@
-/* Board & UI Themes (CSS Variables) */
+/* Board & UI Themes (CSS Variables) matching Google Snake */
 
-/* 1. Classic (Default) */
-:root, [data-theme="classic"] {
-  --bg-color: #12131a;
-  --board-bg-1: #1a1b26;
-  --board-bg-2: #161720;
-  --grid-line: rgba(255, 255, 255, 0.03);
-  --snake-head: #4ecca3;
-  --snake-body: #45b28e;
-  --snake-eye: #12131a;
+/* 1. Desert Gold (Default - matching screenshot) */
+:root, [data-theme="desert"] {
+  --bg-color: #161616;
+  --header-bg: #53461c;
+  --border-bg: #ab4e30;
+  --board-bg-1: #fed049;
+  --board-bg-2: #f5c338;
+  --grid-line: transparent;
+  --snake-head: #3b82f6;
+  --snake-body: #3b82f6;
+  --snake-eye: #172554;
   --accent-color: #e94560;
-  --text-primary: #f0f3f8;
-  --text-secondary: #8c93a8;
-  --card-bg: rgba(26, 27, 38, 0.75);
-  --card-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #dcdcdc;
+  --card-bg: rgba(22, 22, 22, 0.88);
+  --card-border: rgba(255, 255, 255, 0.1);
 }
 
-/* 2. AMOLED Dark */
+/* 2. Classic Green (Iconic Google Snake) */
+[data-theme="classic"] {
+  --bg-color: #161616;
+  --header-bg: #4a752c;
+  --border-bg: #578a34;
+  --board-bg-1: #aad751;
+  --board-bg-2: #a2d149;
+  --grid-line: transparent;
+  --snake-head: #4683f2;
+  --snake-body: #4683f2;
+  --snake-eye: #172554;
+  --accent-color: #e94560;
+  --text-primary: #ffffff;
+  --text-secondary: #dcdcdc;
+  --card-bg: rgba(22, 22, 22, 0.88);
+  --card-border: rgba(255, 255, 255, 0.1);
+}
+
+/* 3. AMOLED Dark */
 [data-theme="dark"] {
-  --bg-color: #050507;
-  --board-bg-1: #0e0e12;
-  --board-bg-2: #08080a;
+  --bg-color: #08080a;
+  --header-bg: #111116;
+  --border-bg: #1e1e24;
+  --board-bg-1: #14141a;
+  --board-bg-2: #0d0d12;
   --grid-line: rgba(255, 255, 255, 0.02);
   --snake-head: #00ff88;
   --snake-body: #00cc6a;
   --snake-eye: #050507;
   --accent-color: #ff3838;
   --text-primary: #ffffff;
-  --text-secondary: #636e72;
-  --card-bg: rgba(14, 14, 18, 0.85);
-  --card-border: rgba(255, 255, 255, 0.06);
+  --text-secondary: #888888;
+  --card-bg: rgba(14, 14, 18, 0.88);
+  --card-border: rgba(255, 255, 255, 0.08);
 }
 
-/* 3. Forest Jungle */
+/* 4. Forest Jungle */
 [data-theme="forest"] {
-  --bg-color: #0d1a10;
-  --board-bg-1: #152618;
-  --board-bg-2: #101e13;
+  --bg-color: #0c140e;
+  --header-bg: #152618;
+  --border-bg: #1f3d23;
+  --board-bg-1: #244a29;
+  --board-bg-2: #1a361e;
   --grid-line: rgba(100, 220, 100, 0.04);
   --snake-head: #7bc67e;
   --snake-body: #5ca160;
@@ -44,15 +68,17 @@
   --accent-color: #ff9f43;
   --text-primary: #e8f5e9;
   --text-secondary: #81c784;
-  --card-bg: rgba(21, 38, 24, 0.85);
+  --card-bg: rgba(21, 38, 24, 0.88);
   --card-border: rgba(123, 198, 126, 0.15);
 }
 
-/* 4. Cosmic Space */
+/* 5. Cosmic Space */
 [data-theme="space"] {
-  --bg-color: #060612;
-  --board-bg-1: #101026;
-  --board-bg-2: #0b0b1a;
+  --bg-color: #0a0817;
+  --header-bg: #101026;
+  --border-bg: #1b1b42;
+  --board-bg-1: #212154;
+  --board-bg-2: #17173b;
   --grid-line: rgba(160, 140, 255, 0.05);
   --snake-head: #a29bfe;
   --snake-body: #6c5ce7;
@@ -60,31 +86,17 @@
   --accent-color: #fd79a8;
   --text-primary: #f1f2f6;
   --text-secondary: #a4b0be;
-  --card-bg: rgba(16, 16, 38, 0.85);
+  --card-bg: rgba(16, 16, 38, 0.88);
   --card-border: rgba(162, 155, 254, 0.2);
-}
-
-/* 5. Retro Amber CRT */
-[data-theme="retro"] {
-  --bg-color: #120e06;
-  --board-bg-1: #20170a;
-  --board-bg-2: #181106;
-  --grid-line: rgba(255, 190, 118, 0.06);
-  --snake-head: #ffbe76;
-  --snake-body: #f0932b;
-  --snake-eye: #120e06;
-  --accent-color: #eb4d4b;
-  --text-primary: #ffeaa7;
-  --text-secondary: #d6a2e8;
-  --card-bg: rgba(32, 23, 10, 0.85);
-  --card-border: rgba(255, 190, 118, 0.2);
 }
 
 /* 6. Deep Ocean */
 [data-theme="ocean"] {
-  --bg-color: #051424;
-  --board-bg-1: #0a2238;
-  --board-bg-2: #07192b;
+  --bg-color: #04101e;
+  --header-bg: #0a2238;
+  --border-bg: #103557;
+  --board-bg-1: #124673;
+  --board-bg-2: #0d3457;
   --grid-line: rgba(0, 210, 211, 0.04);
   --snake-head: #00d2d3;
   --snake-body: #01a3a4;
@@ -92,7 +104,6 @@
   --accent-color: #ff6b6b;
   --text-primary: #e0f7fa;
   --text-secondary: #80deea;
-  --card-bg: rgba(10, 34, 56, 0.85);
+  --card-bg: rgba(10, 34, 56, 0.88);
   --card-border: rgba(0, 210, 211, 0.15);
 }
-

@@ -18,35 +18,26 @@
 </head>
 <body>
   <div id="app">
-    <!-- Top Header -->
-    <header class="game-header">
-      <div class="logo">
-        <span class="snake-emoji">🐍</span>
-        <span class="game-title">SNAKE</span>
-      </div>
-      <div class="quick-stats">
-        <div class="stat-box">
-          <span class="stat-icon">🍎</span>
-          <div class="stat-info">
-            <span class="stat-label">SCORE</span>
-            <span id="score-display" class="stat-value">0</span>
-          </div>
+    <div class="game-card">
+      <!-- Top Header matching Google Snake screenshot -->
+      <header class="game-header">
+        <div class="header-left">
+          <span class="apple-icon" title="Score"></span>
+          <span id="score-display" class="header-score">0</span>
         </div>
-        <div class="stat-box">
-          <span class="stat-icon"><span class="trophy-sprite trophy-gold"></span></span>
-          <div class="stat-info">
-            <span class="stat-label">BEST</span>
-            <span id="high-score-display" class="stat-value">0</span>
-          </div>
+        <div class="header-right">
+          <button id="btn-mute-hud" class="header-sound-btn" title="Toggle Sound">
+            <img src="assets/images/volume_up_white_24dp.png" alt="Sound" class="sound-icon-img" id="sound-icon-img" />
+          </button>
+          <button id="btn-settings-header" class="header-btn-settings" title="Settings">⚙️</button>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <!-- Canvas Wrapper with Screens Overlaid -->
-    <main class="canvas-wrapper">
-      <div id="canvas-container">
-        <!-- The Game Canvas -->
-        <canvas id="game-canvas" width="600" height="600"></canvas>
+      <!-- Canvas Wrapper with Screens Overlaid -->
+      <main class="canvas-wrapper">
+        <div id="canvas-container">
+          <!-- The Game Canvas -->
+          <canvas id="game-canvas" width="660" height="592"></canvas>
 
         <!-- In-Game HUD overlay -->
         <div class="hud-overlay" id="hud-overlay">
@@ -153,6 +144,7 @@
         </div>
       </div>
     </main>
+    </div>
 
     <!-- Mobile On-Screen D-Pad -->
     <div id="mobile-controls">

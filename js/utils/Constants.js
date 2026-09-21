@@ -1,11 +1,11 @@
 /**
- * Game constants and configurations
+ * Game constants and configurations matching Google Snake standard
  */
 
 export const GRID = {
-  SMALL: { cols: 20, rows: 20, label: 'Small (20x20)' },
-  MEDIUM: { cols: 30, rows: 30, label: 'Medium (30x30)' },
-  LARGE: { cols: 40, rows: 40, label: 'Large (40x40)' }
+  SMALL: { cols: 11, rows: 9, label: 'Small (11x9)' },
+  MEDIUM: { cols: 17, rows: 15, label: 'Standard (17x15)' },
+  LARGE: { cols: 23, rows: 19, label: 'Large (23x19)' }
 };
 
 export const SPEED = {
@@ -15,7 +15,10 @@ export const SPEED = {
 };
 
 export const CANVAS = {
-  LOGICAL_SIZE: 600 // Internal canvas pixel resolution (600x600)
+  LOGICAL_WIDTH: 660,
+  LOGICAL_HEIGHT: 592,
+  BORDER_X: 24,
+  BORDER_Y: 26
 };
 
 export const DIR = {
@@ -40,4 +43,3 @@ export const GAME_STATE = {
   GAME_OVER: 'GAME_OVER',
   LEADERBOARD: 'LEADERBOARD'
 };
-

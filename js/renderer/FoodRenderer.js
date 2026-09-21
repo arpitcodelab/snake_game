@@ -23,18 +23,20 @@ export class FoodRenderer {
    * @param {Array<object>} foodItems
    * @param {number} cellWidth
    * @param {number} cellHeight
+   * @param {number} [offsetX=0]
+   * @param {number} [offsetY=0]
    */
-  draw(ctx, foodItems, cellWidth, cellHeight) {
+  draw(ctx, foodItems, cellWidth, cellHeight, offsetX = 0, offsetY = 0) {
     if (!foodItems || foodItems.length === 0) return;
 
     const now = performance.now();
 
     for (const food of foodItems) {
-      const centerX = food.x * cellWidth + cellWidth / 2;
-      const centerY = food.y * cellHeight + cellHeight / 2;
+      const centerX = offsetX + food.x * cellWidth + cellWidth / 2;
+      const centerY = offsetY + food.y * cellHeight + cellHeight / 2;
 
-      // Subtle breathing scale (1.0 to 1.08)
-      const scale = 1.0 + Math.sin(now * 0.006 + food.x + food.y) * 0.04;
+      // Subtle breathing scale (1.0 to 1.06)
+      const scale = 1.0 + Math.sin(now * 0.006 + food.x + food.y) * 0.03;
       const drawW = cellWidth * scale;
       const drawH = cellHeight * scale;
       const drawX = centerX - drawW / 2;
@@ -44,39 +46,38 @@ export class FoodRenderer {
 
       // Golden fruit effects
       if (food.isGolden) {
-        // Flash warning when < 1500ms remain
         if (food.timer < 1500) {
           const flash = Math.floor(now / 150) % 2 === 0;
           if (flash) ctx.globalAlpha = 0.4;
         }
 
-        // Golden aura glow
         ctx.shadowColor = '#ffd700';
         ctx.shadowBlur = 16;
 
-        // Draw countdown timer arc
         if (food.duration > 0) {
           const progress = Math.max(0, food.timer / food.duration);
           ctx.strokeStyle = '#ffd700';
-          ctx.lineWidth = 2.5;
+          ctx.lineWidth = 3;
           ctx.beginPath();
-          ctx.arc(centerX, centerY, (cellWidth / 2) + 2, -Math.PI / 2, (-Math.PI / 2) + (Math.PI * 2 * progress));
+          ctx.arc(centerX, centerY, cellWidth * 0.55, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * progress);
           ctx.stroke();
         }
       }
 
       if (this.isLoaded) {
-        const sx = (food.spriteIndex || 0) * this.frameSize;
+        // Draw from spritesheet
+        const frameIndex = food.spriteIndex || 0;
+        const sx = frameIndex * this.frameSize;
         ctx.drawImage(
           this.spritesheet,
           sx, 0, this.frameSize, this.frameSize,
           drawX, drawY, drawW, drawH
         );
       } else {
-        // Fallback procedural rendering
-        ctx.fillStyle = food.isGolden ? '#ffd700' : (food.points > 1 ? '#ff4757' : '#2ed573');
+        // Fallback procedural circle
+        ctx.fillStyle = food.color || '#ff4757';
         ctx.beginPath();
-        ctx.arc(centerX, centerY, Math.min(drawW, drawH) * 0.4, 0, Math.PI * 2);
+        ctx.arc(centerX, centerY, cellWidth * 0.38, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -84,4 +85,3 @@ export class FoodRenderer {
     }
   }
 }
-

@@ -37,6 +37,40 @@ window.addEventListener('DOMContentLoaded', () => {
   const settingsPanel = new SettingsPanel(screenManager, game, themeSystem, skinSystem);
   const leaderboardScreen = new LeaderboardScreen(screenManager, leaderboardSystem);
 
+  // Wire up header sound toggle with authentic icons
+  const muteBtn = document.getElementById('btn-mute-hud');
+  const soundIconImg = document.getElementById('sound-icon-img');
+
+  const updateMuteIcon = (isMuted) => {
+    if (soundIconImg) {
+      soundIconImg.src = isMuted
+        ? 'assets/images/not_interested_white_24dp.png'
+        : 'assets/images/volume_up_white_24dp.png';
+      soundIconImg.alt = isMuted ? 'Muted' : 'Sound On';
+    }
+  };
+
+  if (muteBtn) {
+    updateMuteIcon(game.audioManager.isMuted);
+
+    muteBtn.addEventListener('click', () => {
+      const isMuted = game.audioManager.toggleMute();
+      updateMuteIcon(isMuted);
+    });
+
+    bus.on('audio:mute_changed', ({ isMuted }) => {
+      updateMuteIcon(isMuted);
+    });
+  }
+
+  // Wire up header settings button
+  const btnSettingsHeader = document.getElementById('btn-settings-header');
+  if (btnSettingsHeader) {
+    btnSettingsHeader.addEventListener('click', () => {
+      screenManager.openPanel('settings');
+    });
+  }
+
   // Show start screen initially
   screenManager.showScreen('start');
 
@@ -46,5 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
   window.__THEME_SYSTEM__ = themeSystem;
   window.__SKIN_SYSTEM__ = skinSystem;
   window.__LEADERBOARD_SYSTEM__ = leaderboardSystem;
+  window.__AUDIO_MGR__ = game.audioManager;
+  window.__PARTICLE_SYS__ = game.particleSystem;
 });
 
