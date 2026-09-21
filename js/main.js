@@ -14,3 +14,4 @@ window.addEventListener('DOMContentLoaded', () => {
   // Expose to window for debugging in developer console
   window.__SNAKE_GAME__ = game;
 });
+

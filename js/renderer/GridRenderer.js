@@ -52,3 +52,4 @@ export class GridRenderer {
     ctx.stroke();
   }
 }
+

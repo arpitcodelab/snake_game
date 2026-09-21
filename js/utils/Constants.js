@@ -40,3 +40,4 @@ export const GAME_STATE = {
   GAME_OVER: 'GAME_OVER',
   LEADERBOARD: 'LEADERBOARD'
 };
+

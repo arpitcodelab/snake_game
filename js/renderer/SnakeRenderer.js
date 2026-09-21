@@ -136,3 +136,4 @@ export class SnakeRenderer {
     ctx.stroke();
   }
 }
+

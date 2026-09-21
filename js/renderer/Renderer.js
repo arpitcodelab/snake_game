@@ -1,5 +1,6 @@
 import { GridRenderer } from './GridRenderer.js';
 import { SnakeRenderer } from './SnakeRenderer.js';
+import { FoodRenderer } from './FoodRenderer.js';
 import { CANVAS } from '../utils/Constants.js';
 
 /**
@@ -13,6 +14,7 @@ export class Renderer {
     
     this.gridRenderer = new GridRenderer();
     this.snakeRenderer = new SnakeRenderer();
+    this.foodRenderer = new FoodRenderer();
 
     this.setupHighDpi();
     window.addEventListener('resize', () => this.setupHighDpi());
@@ -23,7 +25,6 @@ export class Renderer {
    */
   setupHighDpi() {
     const dpr = window.devicePixelRatio || 1;
-    const rect = this.canvas.getBoundingClientRect();
     
     // Physical pixel size of canvas backing store
     this.canvas.width = Math.round(this.logicalSize * dpr);
@@ -37,18 +38,27 @@ export class Renderer {
   /**
    * Master draw frame
    * @param {Snake} snake
+   * @param {Food} food
    * @param {object} grid - { cols, rows }
    */
-  draw(snake, grid) {
+  draw(snake, food, grid) {
     const width = this.logicalSize;
     const height = this.logicalSize;
+    const cellWidth = width / grid.cols;
+    const cellHeight = height / grid.rows;
 
     // 1. Draw board background & grid
     this.gridRenderer.draw(this.ctx, width, height, grid.cols, grid.rows);
 
-    // 2. Draw snake
+    // 2. Draw active food items
+    if (food && food.items) {
+      this.foodRenderer.draw(this.ctx, food.items, cellWidth, cellHeight);
+    }
+
+    // 3. Draw snake
     if (snake) {
-      this.snakeRenderer.draw(this.ctx, snake, width / grid.cols, height / grid.rows);
+      this.snakeRenderer.draw(this.ctx, snake, cellWidth, cellHeight);
     }
   }
 }
+

@@ -85,3 +85,4 @@ export class GameLoop {
     this.rafId = requestAnimationFrame(this.loop);
   }
 }
+

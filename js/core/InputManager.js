@@ -97,3 +97,4 @@ export class InputManager {
     this.lastPolledDir = resetDir;
   }
 }
+

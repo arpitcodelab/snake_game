@@ -101,3 +101,4 @@ export class Snake {
     return newHead;
   }
 }
+

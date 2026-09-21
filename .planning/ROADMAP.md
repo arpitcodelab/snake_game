@@ -2,7 +2,7 @@
 
 ## Summary Checklist
 - [x] **Phase 1: Project Foundation & Core Canvas Loop**
-- [ ] **Phase 2: Fruit System & Collision Mechanics**
+- [x] **Phase 2: Fruit System & Collision Mechanics**
 - [ ] **Phase 3: Game Modes Engine**
 - [ ] **Phase 4: UI Screens, HUD & Mobile Controls**
 - [ ] **Phase 5: Skins, Themes & Local Storage**
@@ -14,7 +14,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Foundation & Core Canvas Loop | 1/1 | Completed | 2026-09-21 |
-| 2. Fruit System & Collision Mechanics | 0/1 | Not started | - |
+| 2. Fruit System & Collision Mechanics | 1/1 | Completed | 2026-09-21 |
 | 3. Game Modes Engine | 0/1 | Not started | - |
 | 4. UI Screens, HUD & Mobile Controls | 0/1 | Not started | - |
 | 5. Skins, Themes & Local Storage | 0/1 | Not started | - |
@@ -44,7 +44,7 @@
   2. Eating fruit increases score (+1 for normal, +3 for special), lengthens the snake by 1 segment, and increases snake speed.
   3. Golden fruit spawns occasionally with an active countdown timer before despawning.
   4. Configurable fruit count (1, 3, or 5) maintains the exact number of active fruits on the board.
-**Plans**: TBD
+**Plans**: 02-01-PLAN.md (Completed)
 
 ### Phase 3: Game Modes Engine
 **Goal**: Implement the extensible `GameMode` strategy architecture and deliver all 6 game modes.

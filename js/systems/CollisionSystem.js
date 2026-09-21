@@ -29,6 +29,23 @@ export class CollisionSystem {
   }
 
   /**
+   * Check if snake head collides with any active food item
+   * @param {object} head - { x, y }
+   * @param {Array<object>} foodItems
+   * @returns {object|null} - Collided food item or null
+   */
+  checkFood(head, foodItems) {
+    if (!foodItems || foodItems.length === 0) return null;
+    for (let i = 0; i < foodItems.length; i++) {
+      const food = foodItems[i];
+      if (head.x === food.x && head.y === food.y) {
+        return food;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Full collision check for current snake position
    * @param {Snake} snake
    * @param {object} grid
@@ -48,3 +65,4 @@ export class CollisionSystem {
     return { collided: false, type: null };
   }
 }
+
